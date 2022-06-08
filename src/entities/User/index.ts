@@ -32,7 +32,7 @@ export class User{
     reserves: Reserve[]
 
     @OneToMany(()=> Item, (item)=>item.owner)
-    itens: Item[]
+    items: Item[]
 
     comparePWD =async (pwdString:string): Promise<boolean> => {
         return await compare(pwdString, this.password)     
