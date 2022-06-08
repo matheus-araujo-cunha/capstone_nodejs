@@ -5,12 +5,12 @@ import * as dotenv from "dotenv";
 
 dotenv.config();
 
-const TestEnv = new DataSource({
-  type: "sqlite",
-  database: "../dbTest.sqlite",
-  synchronize: true,
-  entities: [path.join(__dirname, "./entities/**/*.{js,ts}")],
-});
+// const TestEnv = new DataSource({
+//   type: "sqlite",
+//   database: "../dbTest.sqlite",
+//   synchronize: true,
+//   entities: [path.join(__dirname, "./entities/**/*.{js,ts}")],
+// });
 
 const DevEnv = new DataSource({
   type: "postgres",
@@ -20,4 +20,5 @@ const DevEnv = new DataSource({
   migrations: [path.join(__dirname, "./migrations/**/*.{js,ts}")],
 });
 
-export default process.env.NODE_ENV === "test" ? TestEnv : DevEnv;
+// export default process.env.NODE_ENV === "test" ? TestEnv : DevEnv;
+export default DevEnv;
