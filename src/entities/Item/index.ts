@@ -30,7 +30,7 @@ export class Item{
     @Column({length:50})
     location:string
 
-    @ManyToOne(()=>User, (user)=>user.itens)
+    @ManyToOne(()=>User, (user)=>user.items)
     owner:User
 
     @Column({type:"float"})
