@@ -12,8 +12,8 @@ const serializedCreateRentSchema = yup
   .shape({
     id: yup.string().required(),
     value: yup.number().positive().required(),
-    startAt: yup.date().required(),
-    finishAt: yup.date().required(),
+    startDate: yup.date().required(),
+    finishDate: yup.date().required(),
     item: yup
       .object()
       .shape({
