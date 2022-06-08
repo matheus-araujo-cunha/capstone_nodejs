@@ -3,13 +3,14 @@
   "version": "1.0.0",
   "main": "index.js",
   "repository": "git@github.com:matheus-araujo-cunha/capstone_nodejs.git",
-  "author": "Matheus_Araújo <matheusc2005@hotmail.com>",
+  "author": "Matheus_Araújo <matheusc2005@hotmail.com> / Douglas_Luz <doug.aluz@gmail.com",
   "scripts": {
-    "dev":"ts-node-dev src/app.ts",
-    "typeorm":"typeorm-ts-node-commonjs",
-    "migration:create":"typeorm-ts-node-commonjs migration:create",
-    "migration:generate":"typeorm-ts-node-commonjs migration:generate -d ./src/data-source.ts",
-    "migration:run":"typeorm-ts-node-commonjs migration:run -d ./src/data-source.ts"
+    "dev": "ts-node-dev src/app.ts",
+    "start": "ts-node-dev src/server.ts",
+    "typeorm": "typeorm-ts-node-commonjs",
+    "migration:create": "typeorm-ts-node-commonjs migration:create",
+    "migration:generate": "typeorm-ts-node-commonjs migration:generate -d ./src/data-source.ts",
+    "migration:run": "typeorm-ts-node-commonjs migration:run -d ./src/data-source.ts"
   },
   "license": "MIT",
   "devDependencies": {
@@ -19,6 +20,8 @@
     "typescript": "^4.7.3"
   },
   "dependencies": {
+    "@types/bcrypt": "^5.0.0",
+    "bcrypt": "^5.0.1",
     "dotenv": "^16.0.1",
     "express": "^4.18.1",
     "express-async-errors": "^3.1.1",
