@@ -2,7 +2,7 @@ import { Request } from "express";
 import rentRepository from "../../repositories/rent.repository";
 import { createRentSchema } from "../../schemas";
 
-const getRentById = async ({ params }: Request) => {
+const getRentByIdService = async ({ params }: Request) => {
   const { id } = params;
 
   const rent = await rentRepository.retrieve({ rentUuid: id });
@@ -10,4 +10,4 @@ const getRentById = async ({ params }: Request) => {
   return createRentSchema.validate(rent, { stripUnknown: true });
 };
 
-export default getRentById;
+export default getRentByIdService;
