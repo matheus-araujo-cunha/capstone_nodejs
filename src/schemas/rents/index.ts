@@ -22,8 +22,6 @@ const serializedCreateRentSchema = yup
         brand: yup.string().required(),
         year: yup.number().integer().positive().required(),
         capacity: yup.number().integer().positive().required(),
-        createdAt: yup.date().required(),
-        updateAt: yup.date().required(),
         location: yup.string().max(50).required(),
         owner: yup
           .object()
