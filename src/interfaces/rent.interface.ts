@@ -5,4 +5,9 @@ interface IRent {
   itemId: string;
 }
 
-export { IRent };
+interface IRentToUpdate {
+  startDate?: Date;
+  finishDate?: Date;
+}
+
+export { IRent, IRentToUpdate };

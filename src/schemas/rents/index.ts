@@ -1,7 +1,6 @@
 import * as yup from "yup";
 
 const createRentSchema = yup.object().shape({
-  value: yup.number().positive().required(),
   startAt: yup.date().default(() => new Date()),
   finishAt: yup.date().required(),
   itemId: yup.string().uuid().required(),
@@ -64,7 +63,6 @@ const serializedRentsOfUserSchema = yup
   .required();
 
 const updateRentSchema = yup.object().shape({
-  value: yup.number().positive().optional(),
   startAt: yup.date().optional(),
   finishAt: yup.date().optional(),
 });

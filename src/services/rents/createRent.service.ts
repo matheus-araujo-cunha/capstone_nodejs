@@ -6,6 +6,7 @@ import AppDataSource from "../../data-source";
 import { Item } from "../../entities/Item";
 import { ErrorHandler } from "../../errors/error";
 import { serializedCreateRentSchema } from "../../schemas";
+import { getDiffBetweenDays } from "../../utils";
 
 const createRentService = async ({ validated }: Request) => {
   const rentValidated = validated as IRent;
@@ -19,12 +20,18 @@ const createRentService = async ({ validated }: Request) => {
     throw new ErrorHandler(404, "Item not found");
   }
 
+  const { startDate, finishDate } = rentValidated;
+
+  const daysToRent = getDiffBetweenDays(startDate, finishDate);
+
+  const value = daysToRent * item.dailyPrice;
+
   const rent = new Rent();
 
   rent.item = item;
   rent.finishDate = rentValidated.finishDate;
   rent.startDate = rentValidated.startDate;
-  rent.value = rentValidated.value;
+  rent.value = value;
 
   const rentCreated: Rent = await rentRepository.save(rent);
 

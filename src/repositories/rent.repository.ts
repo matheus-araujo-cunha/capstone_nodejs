@@ -1,4 +1,4 @@
-import { DeleteResult, Repository } from "typeorm";
+import { DeleteResult, Repository, UpdateResult } from "typeorm";
 import { Rent } from "../entities/Rent";
 import AppDataSource from "../data-source";
 
@@ -7,6 +7,7 @@ interface IRentRepo {
   delete: (rentId: string) => Promise<DeleteResult>;
   listAll: () => Promise<Rent[]>;
   retrieve: (payload: object) => Promise<Rent | null>;
+  update: (payload: object, rentId: string) => Promise<UpdateResult>;
 }
 
 class RentRepository implements IRentRepo {
@@ -25,6 +26,10 @@ class RentRepository implements IRentRepo {
     await this.rentRepo.findOneBy({ ...payload });
 
   delete = async (rentId: string) => await this.rentRepo.delete(rentId);
+
+  update = async (payload: object, rentId: string) => {
+    return await this.rentRepo.update(rentId, { ...payload });
+  };
 }
 
 export default new RentRepository();
