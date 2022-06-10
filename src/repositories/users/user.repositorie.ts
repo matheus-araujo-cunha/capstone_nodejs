@@ -6,7 +6,6 @@ import { hash } from "bcrypt"
 interface IUserRepo{
 
     save:(user:User)=>Promise<User>
-    getAll: () => Promise<User[]>;
     update:(uuid:string,payload:Partial<User>)=>Promise<UpdateResult>
     delete:(uuid:string)=>Promise<DeleteResult>
     retrieve: (payload: object) => Promise<User>;
@@ -20,13 +19,12 @@ class UseRepository implements IUserRepo {
         
         this.repo = AppDataSource.getRepository(User)
     }
-    save=async (user: object) =>await this.repo.save(user);
+    save=async (user: User) =>await this.repo.save(user);
 
-    getAll = async () => await this.repo.find();
     
     update= async(uuid: string, payload: Partial<User>) =>{
         if(payload.password){
-            payload.password=await hash(payload.password,10)
+            payload.password = await hash(payload.password,10)
         }
         return this.repo.update(uuid,{...payload})
     }
