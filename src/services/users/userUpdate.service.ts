@@ -7,11 +7,11 @@ import { Request } from "express";
 
 const userUpdateService = async ({
     user,
-    body,
+    validated,
   }: Request): Promise<Partial<User>> => {
-    await userRepository.update(user.userUuid, { ...body });
+    await userRepository.update(user.userUuid, { ...validated });
 
-    return userWOPassword({ ...user, ...body });
+    return userWOPassword({ ...user, ...validated });
   };
 
   export default userUpdateService

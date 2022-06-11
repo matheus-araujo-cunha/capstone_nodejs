@@ -3,7 +3,7 @@ import { Request,Response } from "express";
 
 
 const userLoginController= async(req:Request,res:Response)=>{
-    const{status,message}=await userLoginService( req )
+    const{status,message} = await userLoginService( req )
 
     return res.status(status).json(message) 
 }

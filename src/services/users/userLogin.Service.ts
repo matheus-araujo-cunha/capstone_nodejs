@@ -2,16 +2,17 @@ import { sign } from "jsonwebtoken";
 import { Request,Response } from "express"
 import { IStatusLogin } from "../../interfaces/users/login.interface"
 import userRepositorie from "../../repositories/users/user.repositorie"
+import { User } from "../../entities/User";
 
-const userLoginService = async({body}:Request):Promise<IStatusLogin>=>{
-    const foundUser = await userRepositorie.retrieve({
-        email:body.email.toLowerCase()
+const userLoginService = async({validated}:Request):Promise<IStatusLogin>=>{
+    const foundUser:User = await userRepositorie.retrieve({
+        email:validated.email
     })
     if(!foundUser){
-        return {status : 400 , message:{message:"Invalid Credencials"}}
+        return {status : 401 , message:{message:"Invalid Credencials"}}
     }
-    if(!(await foundUser.comparePWD(body.password))){
-        return {status:400,message:{message:"Invalid Credencials"}}
+    if(!(await foundUser.comparePWD(validated.password))){
+        return {status:401,message:{message:"Invalid Credentials"}}
     }
 
     const token = sign({ ...foundUser }, process.env.SECRET_KEY, {

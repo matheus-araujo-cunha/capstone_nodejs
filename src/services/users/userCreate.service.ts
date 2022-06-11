@@ -3,13 +3,16 @@ import { User } from "../../entities/User"
 import { hash } from "bcrypt"
 import userRepository from "../../repositories/users/user.repositorie"
 import { userWOPassword } from "../../utils"
+import { serializedCreateUserSchema } from "../../schemas/users/createUser.schema"
 
 
-const userCreateService =async({body}:Request):Promise<Partial<User>>=>{
+const userCreateService =async({validated}:Request):Promise<Partial<User>>=>{
     
-    body.password = await hash(body.password,10)
-    const user = await userRepository.save({...body})
-
-    return userWOPassword(user)
+    (validated as User).password = await hash((validated as User).password,10)
+    const user = await userRepository.save({...validated})
+    
+    return serializedCreateUserSchema.validate(user,{
+        stripUnknown:true
+    })
 }
 export default userCreateService
