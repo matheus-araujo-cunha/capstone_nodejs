@@ -2,7 +2,6 @@ import { Request,Response } from "express"
 import { User } from "../../entities/User"
 import { hash } from "bcrypt"
 import userRepository from "../../repositories/users/user.repositorie"
-import { userWOPassword } from "../../utils"
 import { serializedCreateUserSchema } from "../../schemas/users/createUser.schema"
 
 

@@ -1,7 +1,7 @@
 import { Request } from "express";
 import userRepository from "../../repositories/users/user.repositorie";
 import { User } from "../../entities/User";
-import { userWOPassword } from "../../utils";
+import { userWOPassword } from "../../utils/userWOpass.util";
 
 
   const userDeleteUserService = async ({ user }: Request): Promise<Partial<User>> => {

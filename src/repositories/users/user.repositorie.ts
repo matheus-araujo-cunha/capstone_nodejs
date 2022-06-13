@@ -8,7 +8,7 @@ interface IUserRepo{
     save:(user:User)=>Promise<User>
     update:(uuid:string,payload:Partial<User>)=>Promise<UpdateResult>
     delete:(uuid:string)=>Promise<DeleteResult>
-    retrieve: (payload: object) => Promise<User>;
+    retrieve: (payload: object) => Promise<User | null>;
     
 }
 class UseRepository implements IUserRepo {

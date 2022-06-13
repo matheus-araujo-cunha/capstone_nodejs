@@ -1,13 +1,9 @@
 import { Express } from "express";
-import route from "./userRoute"
+import { userInfo } from "os";
+import { rentsRoutes } from "./rents.routes";
+import {userRoutes} from "./user.routes";
 
 export const appRoutes = (app: Express) => {
-
-    app.use(route)
-
-
+  app.use("/rents", rentsRoutes());
+  app.use("/users",userRoutes)
 };
-
-
-
-

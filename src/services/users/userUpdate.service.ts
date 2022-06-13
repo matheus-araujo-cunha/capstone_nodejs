@@ -1,5 +1,5 @@
 import { User } from "../../entities/User";
-import { userWOPassword } from "../../utils";
+import { userWOPassword } from "../../utils/userWOpass.util";
 import userRepository from "../../repositories/users/user.repositorie";
 import { Request } from "express";
 

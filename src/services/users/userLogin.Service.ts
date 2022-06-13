@@ -5,7 +5,7 @@ import userRepositorie from "../../repositories/users/user.repositorie"
 import { User } from "../../entities/User";
 
 const userLoginService = async({validated}:Request):Promise<IStatusLogin>=>{
-    const foundUser:User = await userRepositorie.retrieve({
+    const foundUser:User | null = await userRepositorie.retrieve({
         email:validated.email
     })
     if(!foundUser){
@@ -15,7 +15,7 @@ const userLoginService = async({validated}:Request):Promise<IStatusLogin>=>{
         return {status:401,message:{message:"Invalid Credentials"}}
     }
 
-    const token = sign({ ...foundUser }, process.env.SECRET_KEY, {
+    const token = sign({ ...foundUser }, process.env.SECRET_KEY as string, {
         expiresIn: process.env.EXPIRES_IN,
       });
       

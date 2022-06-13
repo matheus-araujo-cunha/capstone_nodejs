@@ -1,5 +1,5 @@
 import { Request,Response } from "express";
-import { userWOPassword } from "../../utils";
+import { userWOPassword } from "../../utils/userWOpass.util";
 
 
 
