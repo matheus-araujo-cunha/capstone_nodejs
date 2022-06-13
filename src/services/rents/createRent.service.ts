@@ -1,37 +1,32 @@
 import { Request } from "express";
 import { Rent } from "../../entities/Rent";
-import { IRent } from "../../interfaces/rent.interface";
+import { IRentCreate } from "../../interfaces/rent.interface";
 import rentRepository from "../../repositories/rent.repository";
 import AppDataSource from "../../data-source";
 import { Item } from "../../entities/Item";
 import { ErrorHandler } from "../../errors/error";
 import { serializedCreateRentSchema } from "../../schemas";
 import { getDiffBetweenDays } from "../../utils";
+import { Reserve } from "../../entities/Reserve";
 
 const createRentService = async ({ validated }: Request) => {
-  const rentValidated = validated as IRent;
-  const itemRepository = AppDataSource.getRepository(Item);
+  const reserveValidated = validated as IRentCreate;
+  const reserveRepository = AppDataSource.getRepository(Reserve);
 
-  const item = await itemRepository.findOneBy({
-    itemUuid: rentValidated.itemId,
+  const reserve = await reserveRepository.findOneBy({
+    reserveUuid: reserveValidated.reserveId,
   });
 
-  if (!item) {
-    throw new ErrorHandler(404, "Item not found");
+  if (!reserve) {
+    throw new ErrorHandler(404, "Reserve not found");
   }
-
-  const { startDate, finishDate } = rentValidated;
-
-  const daysToRent = getDiffBetweenDays(startDate, finishDate);
-
-  const value = daysToRent * item.dailyPrice;
 
   const rent = new Rent();
 
-  rent.item = item;
-  rent.finishDate = rentValidated.finishDate;
-  rent.startDate = rentValidated.startDate;
-  rent.value = value;
+  rent.item = reserve.item;
+  rent.finishDate = reserve.finishDate;
+  rent.startDate = reserve.startDate;
+  rent.value = reserve.value;
 
   const rentCreated: Rent = await rentRepository.save(rent);
 
