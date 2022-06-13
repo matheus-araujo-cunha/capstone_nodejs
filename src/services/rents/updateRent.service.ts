@@ -24,7 +24,10 @@ const updateRentService = async ({ params, validated }: Request) => {
     startDate = rentToUpdate?.startDate as Date;
   }
 
-  const daysToRent = getDiffBetweenDays(startDate, finishDate);
+  const daysToRent = getDiffBetweenDays(
+    startDate.toISOString(),
+    finishDate.toISOString()
+  );
 
   const value = daysToRent * rentToUpdate?.item.dailyPrice;
 
