@@ -1,13 +1,13 @@
-import moment from "moment";
+import luxon from "luxon";
 
-const getDiffBetweenDays = (initialDate: Date, finishDate: Date) => {
-  const diff = moment(initialDate, "DD/MM/YYYY").diff(
-    moment(finishDate, "DD/MM/YYYY")
-  );
+const DateTime = luxon.DateTime;
 
-  const days = moment.duration(diff).asDays();
+const getDiffBetweenDays = (initialDate: string, finishDate: string) => {
+  const response = DateTime.fromISO(initialDate)
+    .diff(DateTime.fromISO(finishDate), "days")
+    .toObject();
 
-  return days;
+  return Math.floor(response.days as number);
 };
 
 export { getDiffBetweenDays };
