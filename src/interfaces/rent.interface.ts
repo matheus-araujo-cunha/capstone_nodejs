@@ -1,8 +1,5 @@
-interface IRent {
-  value: number;
-  startDate: Date;
-  finishDate: Date;
-  itemId: string;
+interface IRentCreate {
+  reserveId: string;
 }
 
 interface IRentToUpdate {
@@ -10,4 +7,4 @@ interface IRentToUpdate {
   finishDate?: Date;
 }
 
-export { IRent, IRentToUpdate };
+export { IRentCreate, IRentToUpdate };
