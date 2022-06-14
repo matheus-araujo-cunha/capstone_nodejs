@@ -1,12 +1,11 @@
-import { Request,Response } from "express";
-import { userWOPassword } from "../../utils/userWOpass.util";
+import {Request, Response} from "express"
+import { User } from "../../entities/User"
+import { userGetByIdService } from "../../services/users/userGetById.service"
 
 
 
+export const userGetByIdController = async (req:Request,res:Response)=>{
+  const user = await userGetByIdService(req)
 
-
-const userByIdController = (req: Request, res: Response) => {
-    return res.status(200).json(userWOPassword(req.user));
-  };
-
-export default userByIdController
+  return res.status(200).json(user)
+}

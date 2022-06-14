@@ -1,17 +1,22 @@
 import { User } from "../../entities/User";
-import { userWOPassword } from "../../utils/userWOpass.util";
 import userRepository from "../../repositories/users/user.repositorie";
 import { Request } from "express";
 
 
 
 const userUpdateService = async ({
-    user,
-    validated,
+    params,
+    body,
   }: Request): Promise<Partial<User>> => {
-    await userRepository.update(user.userUuid, { ...validated });
+    const {id}= params
 
-    return userWOPassword({ ...user, ...validated });
+    await userRepository.update(id, body as Partial<User>);
+    
+    const user = await userRepository.retrieve({userUuid:id}) as User
+
+    
+
+    return user
   };
 
   export default userUpdateService
