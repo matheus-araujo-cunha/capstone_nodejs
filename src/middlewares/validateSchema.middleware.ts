@@ -5,11 +5,11 @@ const validateSchema =
   (schema: AnySchema) =>
   async (req: Request, res: Response, next: NextFunction) => {
     try {
+      console.log(req.body)
       const validated = await schema.validate(req.body, {
         abortEarly: false,
         stripUnknown: true,
       });
-
       req.validated = validated;
       return next();
     } catch (error: any) {

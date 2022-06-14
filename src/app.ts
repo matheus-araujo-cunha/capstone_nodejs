@@ -19,5 +19,4 @@ app.use(
 app.use((err: Error, _: Request, res: Response, __: NextFunction) => {
   return errorHandler(err, res);
 });
-
 export default app;

@@ -1,10 +1,12 @@
+
 import { User } from "../../src/entities/User";
-import { IRentCreate } from "../../src/interfaces/rent.interface";
+import { IRentCreate, IRentToUpdate } from "../../src/interfaces/rent.interface";
 
 declare global {
   namespace Express {
     interface Request {
-      validated: IRentCreate | IRentToUpdate;
+      user: User;
+      validated: IRentCreate | IRentToUpdate | User;
       decoded: Partial<User>;
     }
   }
