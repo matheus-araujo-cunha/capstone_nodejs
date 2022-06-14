@@ -3,8 +3,9 @@ import { Request,Response } from "express";
 
 
 const userCreateController= async(req:Request,res:Response)=>{
+    console.log(req.body)
     const newUser = await userCreateService(req)
-
+    
 
     return res.status(201).json(newUser)    
 }

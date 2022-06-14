@@ -6,10 +6,10 @@ import { serializedCreateUserSchema } from "../../schemas/users/createUser.schem
 
 
 const userCreateService =async({validated}:Request):Promise<Partial<User>>=>{
-    
+
     (validated as User).password = await hash((validated as User).password,10)
-    const user = await userRepository.save({...validated})
     
+    const user = await userRepository.save({...validated})
     return serializedCreateUserSchema.validate(user,{
         stripUnknown:true
     })

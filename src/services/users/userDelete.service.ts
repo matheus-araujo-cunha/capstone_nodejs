@@ -4,10 +4,14 @@ import { User } from "../../entities/User";
 import { userWOPassword } from "../../utils/userWOpass.util";
 
 
-  const userDeleteUserService = async ({ user }: Request): Promise<Partial<User>> => {
-    await userRepository.delete(user.userUuid);
+  const userDeleteUserService = async ({params}:Request)=> {
+    const {id} =params
 
-    return userWOPassword(user);
+    await userRepository.delete(id);
+
+
+    return {}
+
   };
 
 
