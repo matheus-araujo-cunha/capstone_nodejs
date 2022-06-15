@@ -1,7 +1,7 @@
 import { Request } from "express";
 import { Rent } from "../../entities/Rent";
 import { IRentCreate } from "../../interfaces/rent.interface";
-import rentRepository from "../../repositories/rent.repository";
+import { rentRepository } from "../../repositories";
 import AppDataSource from "../../data-source";
 import { Item } from "../../entities/Item";
 import { ErrorHandler } from "../../errors/error";
