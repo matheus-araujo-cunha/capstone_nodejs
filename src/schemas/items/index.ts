@@ -64,8 +64,23 @@ const serializedGetItemsSchema = yup.array().of(
   })
 );
 
+const updateItemSchema = yup
+  .object()
+  .shape({
+    model: yup.string().optional(),
+    brand: yup.string().optional(),
+    year: yup.number().positive().integer().optional(),
+    capacity: yup.number().positive().integer().optional(),
+    location: yup.string().optional(),
+    dailyPrice: yup.number().positive().optional(),
+    service: yup.boolean().optional(),
+    image: yup.string().optional(),
+  })
+  .required();
+
 export {
   createItemSchema,
   serializedGetItemsSchema,
   serializedItemCreatedSchema,
+  updateItemSchema,
 };
