@@ -7,10 +7,6 @@
           "typeRoots": ["./node_modules/@types", "@types"],
            "outDir": "./dist",
             "esModuleInterop": true,
-            "forceConsistentCasingInFileNames": true,
-            "strict": true,
-           "strictPropertyInitialization": false,
-            "skipLibCheck": true,
             "resolveJsonModule": true
   }
 }
