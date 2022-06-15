@@ -22,7 +22,7 @@ const createItemSchema = yup
 const serializedItemCreatedSchema = yup
   .object()
   .shape({
-    id: yup.string().required(),
+    itemUuid: yup.string().required(),
     model: yup.string().required(),
     brand: yup.string().required(),
     year: yup.number().required().positive().integer(),
@@ -34,7 +34,7 @@ const serializedItemCreatedSchema = yup
     service: yup.boolean().required(),
     image: yup.string().required(),
     owner: yup.object().shape({
-      id: yup.string().required(),
+      userUuid: yup.string().required(),
       name: yup.string().required(),
       email: yup.string().required(),
       phone: yup.string().required(),
@@ -44,7 +44,7 @@ const serializedItemCreatedSchema = yup
 
 const serializedGetItemsSchema = yup.array().of(
   yup.object().shape({
-    id: yup.string().required(),
+    itemUuid: yup.string().required(),
     model: yup.string().required(),
     brand: yup.string().required(),
     year: yup.number().required().positive().integer(),
@@ -56,7 +56,7 @@ const serializedGetItemsSchema = yup.array().of(
     service: yup.boolean().required(),
     image: yup.string().required(),
     owner: yup.object().shape({
-      id: yup.string().required(),
+      userUuid: yup.string().required(),
       name: yup.string().required(),
       email: yup.string().required(),
       phone: yup.string().required(),

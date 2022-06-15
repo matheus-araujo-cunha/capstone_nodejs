@@ -11,7 +11,7 @@ const verifyOwnerPermissionItem = (
   const { userUuid } = decoded;
 
   if (item.owner.userUuid !== userUuid) {
-    throw new ErrorHandler(401, "You are not allowed to update this item");
+    throw new ErrorHandler(401, "You are not allowed to change this item");
   }
 
   return next();

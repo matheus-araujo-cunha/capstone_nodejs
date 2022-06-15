@@ -2,7 +2,7 @@ import { Request } from "express";
 import { Item } from "../../entities/Item";
 import { ErrorHandler } from "../../errors/error";
 import { itemRepository } from "../../repositories";
-import { createItemSchema } from "../../schemas/items";
+import { serializedItemCreatedSchema } from "../../schemas/items";
 
 const updateItemService = async ({ item, validated }: Request) => {
   const itemValidated = validated as Partial<Item>;
@@ -13,7 +13,9 @@ const updateItemService = async ({ item, validated }: Request) => {
     itemUuid: item.itemUuid,
   });
 
-  return createItemSchema.validate(itemUpdated, { stripUnknown: true });
+  return serializedItemCreatedSchema.validate(itemUpdated, {
+    stripUnknown: true,
+  });
 };
 
 export default updateItemService;
