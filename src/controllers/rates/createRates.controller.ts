@@ -3,7 +3,7 @@ import createRateService from "../../services/rates/createRates.service";
 
 
 const createRateController=async(req:Request,res:Response)=>{
-    const rate = await createRateService(req,req)
+    const rate = await createRateService(req)
 
     return res.status(201).json({rate})
 

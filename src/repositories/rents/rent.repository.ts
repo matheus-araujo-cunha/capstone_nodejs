@@ -1,6 +1,6 @@
 import { DeleteResult, Repository, UpdateResult } from "typeorm";
-import { Rent } from "../entities/Rent";
-import AppDataSource from "../data-source";
+import { Rent } from "../../entities/Rent";
+import AppDataSource from "../../data-source";
 
 interface IRentRepo {
   save: (rent: Partial<Rent>) => Promise<Rent>;

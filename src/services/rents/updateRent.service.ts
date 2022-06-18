@@ -1,7 +1,7 @@
 import { Request } from "express";
 import { ErrorHandler } from "../../errors/error";
 import { IRentToUpdate } from "../../interfaces/rent.interface";
-import rentRepository from "../../repositories/rent.repository";
+import { rentRepository } from "../../repositories";
 import { createRentSchema } from "../../schemas";
 import { getDiffBetweenDays } from "../../utils";
 
