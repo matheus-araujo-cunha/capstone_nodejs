@@ -1,8 +1,7 @@
 import luxon from "luxon";
 
-const DateTime = luxon.DateTime;
-
 const getDiffBetweenDays = (initialDate: string, finishDate: string) => {
+  const DateTime = luxon.DateTime;
   const response = DateTime.fromISO(initialDate)
     .diff(DateTime.fromISO(finishDate), "days")
     .toObject();
@@ -10,4 +9,12 @@ const getDiffBetweenDays = (initialDate: string, finishDate: string) => {
   return Math.floor(response.days as number);
 };
 
-export { getDiffBetweenDays };
+const formatDate = (date: string) => {
+  let dateSplit = date.split("/");
+
+  const dateFormated = [dateSplit[1], dateSplit[0], dateSplit[2]].join("/");
+
+  return dateFormated;
+};
+
+export { getDiffBetweenDays, formatDate };
