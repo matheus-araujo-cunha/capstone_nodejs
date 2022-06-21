@@ -1,3 +1,4 @@
+import { Rate } from "../../src/entities/Rate";
 import { Item } from "../../src/entities/Item";
 import { Reserve } from "../../src/entities/Reserve";
 import { User } from "../../src/entities/User";
@@ -15,6 +16,7 @@ declare global {
     interface Request {
       user: User;
       validated:
+        Partial<Rate>
         | IRentCreate
         | IRentToUpdate
         | User

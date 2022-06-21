@@ -1,6 +1,6 @@
 import { MigrationInterface, QueryRunner } from "typeorm"
 
-export class changingRulesOfRelationship1654647664539 implements MigrationInterface {
+export class initialMigration1655744539249 implements MigrationInterface {
 
     public async up(queryRunner: QueryRunner): Promise<void> {
     }

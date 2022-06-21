@@ -5,7 +5,7 @@
   "repository": "git@github.com:matheus-araujo-cunha/capstone_nodejs.git",
   "author": "Matheus_Araújo <matheusc2005@hotmail.com> / Douglas_Luz <doug.aluz@gmail.com",
   "scripts": {
-    "dev": "ts-node-dev --files --rs src/server.ts ",
+    "dev": "ts-node-dev --files --rs src/server.ts",
     "start": "node dist/server.js",
     "typeorm": "typeorm-ts-node-commonjs",
     "build": "tsc",

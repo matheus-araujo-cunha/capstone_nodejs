@@ -58,7 +58,8 @@ export class Item {
   @OneToMany(() => Reserve, (reserve) => reserve.item)
   reserves: Reserve[];
 
-  @ManyToMany(() => Rate, (rate) => rate.item)
-  @JoinTable()
+  @OneToMany(() => Rate,(rate)=>rate.item,{
+    eager:true
+  })
   rates: Rate[];
 }
