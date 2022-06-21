@@ -1,7 +1,6 @@
-import luxon from "luxon";
+import { DateTime } from "luxon";
 
 const getDiffBetweenDays = (initialDate: string, finishDate: string) => {
-  const DateTime = luxon.DateTime;
   const response = DateTime.fromISO(initialDate)
     .diff(DateTime.fromISO(finishDate), "days")
     .toObject();
