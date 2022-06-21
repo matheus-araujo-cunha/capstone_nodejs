@@ -9,7 +9,7 @@ const listAllRentsUserService = async ({ decoded }: Request) => {
 
   const user = (await userRepository.findOneBy({ userUuid })) as User;
 
-  return user.rents;
+  return await user.rents;
 };
 
 export default listAllRentsUserService;

@@ -1,5 +1,5 @@
-import userCreateService from "../../services/users/userCreate.service"
-import { Request,Response } from "express";
+import userCreateService from "../../services/users/userCreate.service";
+import { Request, Response } from "express";
 
 
 const userCreateController= async(req:Request,res:Response)=>{
@@ -8,4 +8,5 @@ const userCreateController= async(req:Request,res:Response)=>{
 
     return res.status(201).json(newUser)    
 }
+
 export default userCreateController

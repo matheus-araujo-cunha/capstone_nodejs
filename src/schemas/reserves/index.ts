@@ -1,22 +1,22 @@
 import * as yup from "yup";
 
 const createReserveSchema = yup.object().shape({
-  startAt: yup.date().default(() => new Date()),
-  finishAt: yup.date().required(),
+  startDate: yup.string().required(),
+  finishDate: yup.string().required(),
   itemId: yup.string().uuid().required(),
 });
 
 const serializedCreateReserveSchema = yup
   .object()
   .shape({
-    id: yup.string().required(),
+    reserveUuid: yup.string().required(),
     value: yup.number().positive().required(),
     startDate: yup.date().required(),
     finishDate: yup.date().required(),
     item: yup
       .object()
       .shape({
-        id: yup.string().required(),
+        itemUuid: yup.string().required(),
         model: yup.string().required(),
         brand: yup.string().required(),
         year: yup.number().integer().positive().required(),
@@ -25,7 +25,7 @@ const serializedCreateReserveSchema = yup
         owner: yup
           .object()
           .shape({
-            id: yup.string().required(),
+            userUuid: yup.string().required(),
             name: yup.string().required(),
             email: yup.string().required(),
             phone: yup.string().required(),
@@ -45,10 +45,10 @@ const serializedReservesOfUserSchema = yup
     yup
       .object()
       .shape({
-        id: yup.string().required(),
+        reserveUuid: yup.string().required(),
         value: yup.number().positive().required(),
-        startAt: yup.date().required(),
-        finishAt: yup.date().required(),
+        startDate: yup.date().required(),
+        finishDate: yup.date().required(),
         item: yup
           .object()
           .shape({
@@ -63,8 +63,8 @@ const serializedReservesOfUserSchema = yup
   .required();
 
 const updateReserveSchema = yup.object().shape({
-  startAt: yup.date().optional(),
-  finishAt: yup.date().optional(),
+  startDate: yup.date().optional(),
+  finishDate: yup.date().optional(),
 });
 
 export {
