@@ -25,7 +25,7 @@ export class User {
   @Column({ default: false })
   licenced?: boolean;
 
-  @OneToMany(() => Rent, (rent) => rent.user)
+  @OneToMany(() => Rent, (rent) => rent.user, { lazy: true })
   rents: Rent[];
 
   @OneToMany(() => Reserve, (reserve) => reserve.user, { lazy: true })
