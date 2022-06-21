@@ -1,6 +1,7 @@
 import { DeleteResult, Repository, UpdateResult } from "typeorm";
 import { Reserve } from "../../entities/Reserve";
 import AppDataSource from "../../data-source";
+import { Item } from "../../entities/Item";
 
 interface IReserveRepo {
   save: (reserve: Partial<Reserve>) => Promise<Reserve>;
@@ -25,7 +26,8 @@ class ReserveRepository implements IReserveRepo {
   retrieve = async (payload: object) =>
     await this.reserveRepo.findOneBy({ ...payload });
 
-  delete = async (reserveId: string) => await this.reserveRepo.delete(reserveId);
+  delete = async (reserveId: string) =>
+    await this.reserveRepo.delete(reserveId);
 
   update = async (payload: object, reserveId: string) => {
     return await this.reserveRepo.update(reserveId, { ...payload });

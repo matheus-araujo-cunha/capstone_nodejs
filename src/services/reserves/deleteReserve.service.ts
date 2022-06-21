@@ -1,13 +1,11 @@
 import { Request } from "express";
 import { reserveRepository } from "../../repositories/reserves";
 
+const deleteReserveService = async ({ params }: Request) => {
+  const { id } = params;
+  await reserveRepository.delete(id);
 
-const deleteReserveService =async (req:Request) => {
-    const {id} = req.params
-    await reserveRepository.delete(id)
+  return {};
+};
 
-    return {}
-
-}
-
-export default deleteReserveService
+export default deleteReserveService;

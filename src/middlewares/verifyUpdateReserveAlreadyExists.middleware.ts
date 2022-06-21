@@ -1,21 +1,27 @@
-import { Request, Response, NextFunction } from "express";
+import { NextFunction, Request, Response } from "express";
 import { ErrorHandler } from "../errors/error";
-import { IRentCreate } from "../interfaces/rent.interface";
-import { IReserveCreate } from "../interfaces/reserve.interface";
+import { IReserveUpdate } from "../interfaces/reserve.interface";
 import { reserveRepository } from "../repositories/reserves";
 import { formatDate } from "../utils";
 
-const verifyReserveAlreadyExists = async (
+const verifyReserveUpdateAlreadyExists = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
-  const reserveValidated = req.validated as IReserveCreate;
+  const reserveValidated = req.validated as IReserveUpdate;
 
-  const { itemUuid } = req.item;
+  const { id } = req.params;
 
-  const startDate = new Date(formatDate(reserveValidated.startDate));
-  const finishDate = new Date(formatDate(reserveValidated.finishDate));
+  const reserveToUpdate = await reserveRepository.retrieve({ reserveUuid: id });
+
+  const startDate = reserveValidated.startDate
+    ? new Date(formatDate(reserveValidated.startDate))
+    : new Date(reserveToUpdate.startDate);
+
+  const finishDate = reserveValidated.finishDate
+    ? new Date(formatDate(reserveValidated.finishDate))
+    : new Date(reserveToUpdate.finishDate);
 
   if (finishDate.getTime() < startDate.getTime()) {
     throw new ErrorHandler(400, "finishDate cannot be earlier than startDate");
@@ -24,7 +30,7 @@ const verifyReserveAlreadyExists = async (
   const reserves = await reserveRepository.listAll();
 
   const reservesByItem = reserves.filter(
-    (reserve) => reserve.item.itemUuid === itemUuid
+    (reserve) => reserve.item.itemUuid === reserveToUpdate.item.itemUuid
   );
 
   for (let reserve of reservesByItem) {
@@ -40,12 +46,12 @@ const verifyReserveAlreadyExists = async (
     ) {
       throw new ErrorHandler(
         409,
-        "A reservation already exists between the dates provided"
+        `A reservation already exists between the dates provided (${reserve.startDate} at ${reserve.finishDate})`
       );
     }
   }
-
+  req.reserveToUpdate = { startDate, finishDate };
   return next();
 };
 
-export default verifyReserveAlreadyExists;
+export default verifyReserveUpdateAlreadyExists;
