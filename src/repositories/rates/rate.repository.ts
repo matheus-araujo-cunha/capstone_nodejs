@@ -5,7 +5,7 @@ import { hash } from "bcrypt"
 
 interface IRateRepo{
 
-    save:(user:Rate)=>Promise<Rate>
+    save:(user:Partial<Rate>)=>Promise<Rate>
     update:(uuid:string,payload:Partial<Rate>)=>Promise<UpdateResult>
     delete:(uuid:string)=>Promise<DeleteResult>
     retrieve: (payload: object) => Promise<Rate | null>;
@@ -20,7 +20,7 @@ class UseRepository implements IRateRepo {
         
         this.repo = AppDataSource.getRepository(Rate)
     }
-    save=async (rate: Rate) =>await this.repo.save(rate);
+    save=async (rate: Partial<Rate>) =>await this.repo.save(rate);
 
     
     update= async(uuid: string, payload: Partial<Rate>) =>{

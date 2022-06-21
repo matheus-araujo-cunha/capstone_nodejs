@@ -11,9 +11,8 @@ declare global {
   namespace Express {
     interface Request {
       user: User;
-      validated: IRentCreate | IRentToUpdate | User | Partial<Item>;
+      validated: IRentCreate | IRentToUpdate | User | Partial<Item>|Partial<Rate>;
       decoded: Partial<User>;
-      rate:Rate
       item: Item;
     }
   }
