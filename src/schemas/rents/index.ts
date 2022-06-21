@@ -1,22 +1,20 @@
 import * as yup from "yup";
 
 const createRentSchema = yup.object().shape({
-  startAt: yup.date().default(() => new Date()),
-  finishAt: yup.date().required(),
-  itemId: yup.string().uuid().required(),
+  reserveId: yup.string().uuid().required(),
 });
 
 const serializedCreateRentSchema = yup
   .object()
   .shape({
-    id: yup.string().required(),
+    rentUuid: yup.string().required(),
     value: yup.number().positive().required(),
     startDate: yup.date().required(),
     finishDate: yup.date().required(),
     item: yup
       .object()
       .shape({
-        id: yup.string().required(),
+        itemUuid: yup.string().required(),
         model: yup.string().required(),
         brand: yup.string().required(),
         year: yup.number().integer().positive().required(),
@@ -25,7 +23,7 @@ const serializedCreateRentSchema = yup
         owner: yup
           .object()
           .shape({
-            id: yup.string().required(),
+            userUuid: yup.string().required(),
             name: yup.string().required(),
             email: yup.string().required(),
             phone: yup.string().required(),
@@ -45,14 +43,14 @@ const serializedRentsOfUserSchema = yup
     yup
       .object()
       .shape({
-        id: yup.string().required(),
+        rentUuid: yup.string().required(),
         value: yup.number().positive().required(),
         startAt: yup.date().required(),
         finishAt: yup.date().required(),
         item: yup
           .object()
           .shape({
-            id: yup.string().required(),
+            itemUuid: yup.string().required(),
             model: yup.string().required(),
             brand: yup.string().required(),
           })

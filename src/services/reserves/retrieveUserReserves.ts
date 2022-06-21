@@ -8,8 +8,6 @@ const retrieveUserReservesService = async (req: Request) => {
 
   const user = await userRepository.findOneBy({ userUuid: id });
 
-  console.log(user);
-
   return await user.reserves;
 };
 
