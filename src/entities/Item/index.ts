@@ -52,6 +52,9 @@ export class Item {
   @Column()
   image: string;
 
+  @Column({default:0.0,type:"float"})
+  average:number
+
   @OneToMany(() => Rent, (rent) => rent.item)
   rents: Rent[];
 
