@@ -17,11 +17,11 @@ const createRentService = async ({ validated, decoded }: Request) => {
     reserveUuid: reserveValidated.reserveId,
   });
 
-  const user = await userRepository.retrieve({ userUuid: decoded.userUuid });
-
   if (!reserve) {
     throw new ErrorHandler(404, "Reserve not found");
   }
+
+  const user = await userRepository.retrieve({ userUuid: decoded.userUuid });
 
   const rent = new Rent();
 
