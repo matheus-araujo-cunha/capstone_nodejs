@@ -9,6 +9,604 @@
         {"url":"https://localhost:3000"}
     ],
     "paths":{
+        "/users/register":{
+            "post":{
+                "tags":["User"]
+            }
+        },
+        "/users/login":{
+            "post":{
+                "tags":["User"]
+            }
+        },
+        "/users/:id":{
+            "get":{
+                "tags":["User"],
+                "parameters":[
+                    {
+                        "name":"id",
+                        "in":"path",
+                        "description": "ID of user to get",
+                        "required":true,
+                        "schema":{
+                            "type":"string"
+                        },
+                        "style":"simple"
+                    }
+                ]
+            },
+            "patch":{
+                "tags":["User"],
+                "parameters": [
+                    {
+                        "name":"id",
+                        "in":"path",
+                        "description": "ID of user to patch",
+                        "required":true,
+                        "schema":{
+                            "type":"string"
+                        },
+                        "style":"simple"
+                    }
+                ]
+            },
+            "delete":{
+                "tags":["User"],
+                "parameters":[
+                    {
+                        "name":"id",
+                        "in":"path",
+                        "description": "ID of user to delete",
+                        "required":true,
+                        "schema":{
+                            "type":"string"
+                        },
+                        "style":"simple"
+                    }
+                ]
+            }
+        },
+        "/items":{
+            "post":{
+                "tags":["Item"],
+                "parameters":[
+                    {
+                        "name":"token",
+                        "in":"header",
+                        "description":"Token deve ser passado no header",
+                        "required": true,
+                        "schema":{
+                            "type": "string"
+                        },
+                        "style":"simple"
+                    }
+                ],
+                "description":"Rota de cadastro de embarcação",
+                "requestBody":{
+                    "content": {
+                        "application/json":{
+                            "schema":{
+                                "$ref":"#/components/schemas/Item"
+                            },
+                            "examples":{
+                                "item":{
+                                    "value":{
+                                        "model":"Escuna",
+                                        "brand":"Levefort",
+                                        "year":2015,
+                                        "capacity":7,
+                                        "location":"Rio de Janeiro",
+                                        "dailyPrice":60.00,
+                                        "service":true 
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "get":{
+                "tags":["Item"]
+            }
+        },
+        "/items/:id":{
+            "get":{
+                "tags":["Item"],
+                "parameters":[
+                    {
+                        "name":"id",
+                        "in":"path",
+                        "description": "ID of reserve to patch",
+                        "required":true,
+                        "schema":{
+                            "type":"string"
+                        },
+                        "style":"simple"
+                    }
+                ]
+            },
+            "patch":{
+                "tags":["Item"],
+                "parameters":[
+                    {
+                        "name":"id",
+                        "in":"path",
+                        "description": "ID of item to patch",
+                        "required":true,
+                        "schema":{
+                            "type":"string"
+                        },
+                        "style":"simple"
+                    },
+                    {
+                        "name":"token",
+                        "in":"header",
+                        "description":"Token deve ser passado no header",
+                        "required": true,
+                        "schema":{
+                            "type": "string"
+                        },
+                        "style":"simple"
+                    }
+                ]
+            },
+            "delete":{
+                "tags":["Item"],
+                "parameters": [
+                    {
+                        "name":"id",
+                        "in":"path",
+                        "description": "ID of item to delete",
+                        "required":true,
+                        "schema":{
+                            "type":"string"
+                        },
+                        "style":"simple"
+                    },
+                    {
+                        "name":"token",
+                        "in":"header",
+                        "description":"Token deve ser passado no header",
+                        "required": true,
+                        "schema":{
+                            "type": "string"
+                        },
+                        "style":"simple"
+                    }
+                ]
+            }
+        },
+        "/reserves":{
+            "post":{
+                "tags":["Reserve"],
+                "parameters": [
+                    {
+                        "name":"token",
+                        "in":"header",
+                        "description":"Token deve ser passado no header",
+                        "required": true,
+                        "schema":{
+                            "type": "string"
+                        },
+                        "style":"simple"
+                    }
+                ],
+                "description":"Rota de cadastrar uma reserva",
+                "requestBody":{
+                    "content":{
+                        "application/json":{
+                            "schema":{
+                                "$ref":"#/components/schemas/Reserve"
+                            },
+                            "examples":{
+                                "reserve":{
+                                    "value":{
+                                        "startDate":"21/06/2022",
+                                        "finishDate":"27/06/2022",
+                                        "itemId":"07eb7145-1af8-44fc-b48e-6e5e77b55259"
+                                    }
+                                    
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses":{
+                    "201":{
+                        "description":"Created",
+                        "content":{
+                            "application/json":{
+                                "examples":{
+                                    "reserve":{
+                                        "value":{
+                                            "startDate": "2023-11-20T03:00:00.000Z",
+                                            "finishDate": "2023-11-24T03:00:00.000Z",
+                                            "value": 240,
+                                            "reserveUuid": "e694ae4b-bb20-40f3-9c0e-af17f641e0bf",
+                                            "item": {
+                                                "itemUuid": "07eb7145-1af8-44fc-b48e-6e5e77b55259",
+                                                "model": "barco",
+                                                "brand": "teste",
+                                                "year": 2015,
+                                                "capacity": 7,
+                                                "createdAt": "2022-06-21T13:02:43.114Z",
+                                                "updatedAt": "2022-06-21T13:02:43.114Z",
+                                                "location": "Rio de Janeiro",
+                                                "dailyPrice": 60,
+                                                "service": true,
+                                                "image": "https://uploaddeimagens.com.br/images/003/904/917/original/Produto-sem-imagem.jpg?1655305876",
+                                                "owner": {
+                                                    "userUuid": "abfee174-7006-4da6-a74d-d09b9e93871f",
+                                                    "name": "matheusteste",
+                                                    "email": "mathteste@mail.com",
+                                                    "password": "$2b$10$fO1IOVKzXTjBv/i3gEfQGuZDxKeXziJzBOd/nuvmrB/obzxwuRc7K",
+                                                    "phone": "40028922",
+                                                    "licenced": false
+                                                }
+                                            },
+                                            "user": {
+                                                "userUuid": "386ea287-b644-4d90-b17f-fa628f99d3e4",
+                                                "name": "samuel",
+                                                "email": "samuel@mail.com",
+                                                "password": "$2b$10$CWI8nCaLkrevsfi2.fLlt.jWex5H07hlh8uqeTMblY3NOvo3wXnne",
+                                                "phone": "40028922",
+                                                "licenced": false
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400":{
+                        "description":"Bad request",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "default":{
+                                        "message":"finishDate cannot be earlier than startDate"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "403":{
+                        "description": "Forbidden",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "default":{
+                                        "message":"You do not have a license to make a reservation without services"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "409":{
+                        "description":"Conflict",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "default":{
+                                        "message":"A reservation already exists between the dates provided"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "get":{
+                "tags":["Reserve"],
+                "parameters": [
+                    {
+                        "name":"token",
+                        "in":"header",
+                        "description":"Token deve ser passado no header",
+                        "required": true,
+                        "schema":{
+                            "type": "string"
+                        },
+                        "style":"simple"
+                    }
+                ],
+                "description": "Rota de listagem das reservas do usuário",
+                "responses":{
+                    "200":{
+                        "description": "OK",
+                        "content": {
+                            "application/json":{
+                                "schema":{
+                                    "type":"array"
+                                },
+                                "examples":{
+                                    "reserves":{
+                                        "value":[
+                                            {
+                                                "reserveUuid": "a0bd78e7-65f8-4645-83b3-2b44c3014d02",
+                                                "value": 240,
+                                                "startDate": "2023-11-20T03:00:00.000Z",
+                                                "finishDate": "2023-11-24T03:00:00.000Z",
+                                                "item": {
+                                                    "itemUuid": "167d08cd-b8ec-4f55-9329-b98a0e3f1a1e",
+                                                    "model": "testeeeeee",
+                                                    "brand": "teste",
+                                                    "year": 2015,
+                                                    "capacity": 7,
+                                                    "createdAt": "2022-06-21T17:03:57.159Z",
+                                                    "updatedAt": "2022-06-21T17:03:57.159Z",
+                                                    "location": "Minas Gerais",
+                                                    "dailyPrice": 60,
+                                                    "service": false,
+                                                    "image": "https://uploaddeimagens.com.br/images/003/904/917/original/Produto-sem-imagem.jpg?1655305876",
+                                                    "owner": {
+                                                        "userUuid": "5e4fc7ad-70a0-43ac-99e6-5cd3c4da796e",
+                                                        "name": "samuel",
+                                                        "email": "samuel@mail.com",
+                                                        "password": "$2b$10$MfueWrp6bcyoZ88MWh5aRumspHQVjQv9ACrPr1mM5SscB7DRBIGGC",
+                                                        "phone": "40028922",
+                                                        "licenced": false
+                                                    },
+                                                    "rates": []
+                                                }
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/reserves/:id":{
+            "get":{
+                "tags":["Reserve"],
+                "parameters": [
+                    {
+                        "name":"id",
+                        "in":"path",
+                        "description": "ID of reserve to get",
+                        "required":true,
+                        "schema":{
+                            "type":"string"
+                        },
+                        "style":"simple"
+                    },
+                    {
+                        "name":"token",
+                        "in":"header",
+                        "description":"Token deve ser passado no header",
+                        "required": true,
+                        "schema":{
+                            "type": "string"
+                        },
+                        "style":"simple"
+                    }
+                ],
+                "responses":{
+                    "200":{
+                        "description": "OK",
+                        "content": {
+                            "application/json":{
+                                "schema":{
+                                    "type":"array"
+                                },
+                                "examples":{
+                                    "reserves":{
+                                        "value":
+                                            {
+                                                "reserveUuid": "a0bd78e7-65f8-4645-83b3-2b44c3014d02",
+                                                "value": 240,
+                                                "startDate": "2023-11-20T03:00:00.000Z",
+                                                "finishDate": "2023-11-24T03:00:00.000Z",
+                                                "item": {
+                                                    "itemUuid": "167d08cd-b8ec-4f55-9329-b98a0e3f1a1e",
+                                                    "model": "testeeeeee",
+                                                    "brand": "teste",
+                                                    "year": 2015,
+                                                    "capacity": 7,
+                                                    "createdAt": "2022-06-21T17:03:57.159Z",
+                                                    "updatedAt": "2022-06-21T17:03:57.159Z",
+                                                    "location": "Minas Gerais",
+                                                    "dailyPrice": 60,
+                                                    "service": false,
+                                                    "image": "https://uploaddeimagens.com.br/images/003/904/917/original/Produto-sem-imagem.jpg?1655305876",
+                                                    "owner": {
+                                                        "userUuid": "5e4fc7ad-70a0-43ac-99e6-5cd3c4da796e",
+                                                        "name": "samuel",
+                                                        "email": "samuel@mail.com",
+                                                        "password": "$2b$10$MfueWrp6bcyoZ88MWh5aRumspHQVjQv9ACrPr1mM5SscB7DRBIGGC",
+                                                        "phone": "40028922",
+                                                        "licenced": false
+                                                    },
+                                                    "rates": []
+                                                }
+                                            }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404":{
+                        "description": "Not found",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "default":{
+                                        "message":"Reserve not found"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "patch":{
+                "tags":["Reserve"],
+                "parameters": [
+                    {
+                        "name":"id",
+                        "in":"path",
+                        "description": "ID of reserve to patch",
+                        "required":true,
+                        "schema":{
+                            "type":"string"
+                        },
+                        "style":"simple"
+                    },
+                    {
+                        "name":"token",
+                        "in":"header",
+                        "description":"Token deve ser passado no header",
+                        "required": true,
+                        "schema":{
+                            "type": "string"
+                        },
+                        "style":"simple"
+                    }
+                ],
+                "description":"Rota de atualizar uma reserva específica",
+                "requestBody":{
+                    "content":{
+                        "application/json":{
+                            "schema":{
+                                "type":"object",
+                                "properties":{
+                                    "startDate":{
+                                        "type":"string"
+                                    },
+                                    "finishDate":{
+                                        "type":"string"
+                                    }
+                                }
+                            },
+                            "examples":{
+                                "reserve":{
+                                    "value":{
+                                        "startDate":"08/07/2022",
+                                        "finishDate":"15/07/2022"
+                                    }
+                                }
+                            }
+                        }
+
+                    }
+                },
+                "responses":{
+                    "200":{
+                        "description":"OK",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object"
+                                },
+                                "examples":{
+                                    "reserve":{
+                                        "value":{
+                                            "startDate": "2023-11-20T03:00:00.000Z",
+                                            "finishDate": "2023-11-20T03:00:00.000Z",
+                                            "value": 240,
+                                            "reserveUuid": "e694ae4b-bb20-40f3-9c0e-af17f641e0bf",
+                                            "item": {
+                                                "itemUuid": "07eb7145-1af8-44fc-b48e-6e5e77b55259",
+                                                "model": "barco",
+                                                "brand": "teste",
+                                                "year": 2015,
+                                                "capacity": 7,
+                                                "createdAt": "2022-07-21T13:02:43.114Z",
+                                                "updatedAt": "2022-07-21T13:02:43.114Z",
+                                                "location": "Rio de Janeiro",
+                                                "dailyPrice": 60,
+                                                "service": true,
+                                                "image": "https://uploaddeimagens.com.br/images/003/904/917/original/Produto-sem-imagem.jpg?1655305876",
+                                                "owner": {
+                                                    "userUuid": "abfee174-7006-4da6-a74d-d09b9e93871f",
+                                                    "name": "matheusteste",
+                                                    "email": "mathteste@mail.com",
+                                                    "password": "$2b$10$fO1IOVKzXTjBv/i3gEfQGuZDxKeXziJzBOd/nuvmrB/obzxwuRc7K",
+                                                    "phone": "40028922",
+                                                    "licenced": false
+                                                }
+                                            },
+                                            "user": {
+                                                "userUuid": "386ea287-b644-4d90-b17f-fa628f99d3e4",
+                                                "name": "samuel",
+                                                "email": "samuel@mail.com",
+                                                "password": "$2b$10$CWI8nCaLkrevsfi2.fLlt.jWex5H07hlh8uqeTMblY3NOvo3wXnne",
+                                                "phone": "40028922",
+                                                "licenced": false
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "403":{
+                        "description": "Forbidden",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "default":{
+                                        "message":"You do not have a license to make a reservation without services"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete":{
+                "tags":["Reserve"],
+                "parameters": [
+                    {
+                        "name":"id",
+                        "in":"path",
+                        "description": "ID of reserve to delete",
+                        "required":true,
+                        "schema":{
+                            "type":"string"
+                        },
+                        "style":"simple"
+                    },
+                    {
+                        "name":"token",
+                        "in":"header",
+                        "description":"Token deve ser passado no header",
+                        "required": true,
+                        "schema":{
+                            "type": "string"
+                        },
+                        "style":"simple"
+                    }
+                ],
+                "description":"Rota de deleção de uma reserva específica",
+                "responses":{
+                    "204":{
+                        "description":"No content"
+                    },
+                    "404":{
+                        "description": "Not found",
+                        "content": {
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "default":{
+                                        "message":"Reserve not found"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/rents":{
             "post":{
                 "tags":["Rent"],
@@ -16,7 +614,7 @@
                     {
                         "name":"token",
                         "in":"header",
-                        "description":"Token to be passed as a header",
+                        "description":"Token deve ser passado no header",
                         "required": true,
                         "schema":{
                             "type": "string"
@@ -34,10 +632,7 @@
                             "examples":{
                                 "rent":{
                                     "value":{
-                                        "value":250.00,
-                                        "itemId":"5dcd50ae-7a47-4851-8385-83608f50b4f8",
-                                        "startDate":"Thu Jun 09 2022 10:01:34 GMT-0300",
-                                        "finishDate":"Tue Dec 06 2022 00:00:00 GMT-0300"
+                                        "reserveId":"a0bd78e7-65f8-4645-83b3-2b44c3014d02"
                                     }
                                 }
                             }
@@ -72,7 +667,7 @@
                     {
                         "name":"token",
                         "in":"header",
-                        "description":"Token to be passed as a header",
+                        "description":"Token deve ser passado no header",
                         "required": true,
                         "schema":{
                             "type": "string"
@@ -128,7 +723,7 @@
                     {
                         "name":"token",
                         "in":"header",
-                        "description":"Token to be passed as a header",
+                        "description":"Token deve ser passado no header",
                         "required": true,
                         "schema":{
                             "type": "string"
@@ -193,7 +788,7 @@
                     {
                         "name":"token",
                         "in":"header",
-                        "description":"Token to be passed as a header",
+                        "description":"Token deve ser passado no header",
                         "required": true,
                         "schema":{
                             "type": "string"
@@ -260,7 +855,7 @@
                     {
                         "name":"token",
                         "in":"header",
-                        "description":"Token to be passed as a header",
+                        "description":"Token deve ser passado no header",
                         "required": true,
                         "schema":{
                             "type": "string"
@@ -312,6 +907,46 @@
         
     }, "components": {
         "schemas":{
+            "Item":{
+                "type":"object",
+                "properties": {
+                    "model":{
+                        "type":"string"
+                    },
+	                "brand":{
+                        "type":"string"
+                    },
+	                "year":{
+                        "type":"number"
+                    },
+	                "capacity":{
+                        "type":"number"
+                    },
+	                "location":{
+                        "type":"string"
+                    },
+	                "dailyPrice":{
+                        "type":"string"
+                    },
+	                "service":{
+                        "type":"boolean"
+                    }
+                }
+            },
+            "Reserve":{
+                "type":"object",
+                "properties":{
+                    "startDate":{
+                        "type":"string"
+                    },
+                    "finishDate":{
+                        "type":"string"
+                    },
+                    "itemId":{
+                        "type":"string"
+                    }
+                }
+            },
             "Rent":{
                 "type":"object",
                 "properties":{
