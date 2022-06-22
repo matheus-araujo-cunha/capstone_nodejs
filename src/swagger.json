@@ -6,17 +6,126 @@
         "version":"1.0.0"
     },
     "servers":[
-        {"url":"https://localhost:3000"}
+        {"url":"http://localhost:3000"}
     ],
     "paths":{
         "/users/register":{
             "post":{
-                "tags":["User"]
+                "tags":["User"],
+                "description": "Rota de cadastro de usuário",
+                "requestBody":{
+                    "content":{
+                        "application/json":{
+                            "schema":{
+                                "type":"object",
+                                "$ref":"#/components/schemas/User"
+                            },
+                            "examples":{
+                                "user":{
+                                    "value":{
+                                        "name":"math",
+                                        "email":"math@mail.com",
+                                        "password":"1234",
+                                        "phone":"40028922",
+                                        "licenced":true
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses":{
+                    "201":{
+                        "description":"Created",
+                        "content":{
+                            "application/json":{
+                                "examples":{
+                                    "user":{
+                                        "value":{
+                                            "licenced": true,
+                                            "phone": "40028922",
+                                            "email": "math@mail.com",
+                                            "name": "math",
+                                            "userUuid": "d1d09749-a81d-4294-b417-7f20356e1f6e"       
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "409":{
+                        "description":"Conflict",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "default":{
+                                        "message":"Email already exists"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
             }
         },
         "/users/login":{
             "post":{
-                "tags":["User"]
+                "tags":["User"],
+                "requestBody":{
+                    "content":{
+                        "application/json":{
+                            "schema":{
+                                "type":"object",
+                                "properties":{
+                                    "email":{
+                                        "type":"string"
+                                    },
+                                    "password":{
+                                        "type":"string"
+                                    }
+                                }
+                            },
+                            "examples":{
+                                "login":{
+                                    "value":{
+                                        "email": "math@mail.com",
+                                        "password":"1234"
+                                    }
+                                }
+                            }
+                            
+                        }
+                    }
+                },
+                "responses":{
+                    "200":{
+                        "description": "OK",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "default":{
+                                        "token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyVXVpZCI6ImQxZDA5NzQ5LWE4MWQtNDI5NC1iNDE3LTdmMjAzNTZlMWY2ZSIsIm5hbWUiOiJtYXRoIiwiZW1haWwiOiJtYXRoQG1haWwuY29tIiwicGFzc3dvcmQiOiIkMmIkMTAkY0hUejZWZDB6THRhWFBkdFNLUHA4T2NTU2I0dW5CTDFzSTVmd01TS1ZoUjFVU3FLZm9CQm0iLCJwaG9uZSI6IjQwMDI4OTIyIiwibGljZW5jZWQiOnRydWUsImlhdCI6MTY1NTg1Nzk0MCwiZXhwIjoxNjU1OTQ0MzQwfQ.Ws0E85Oj35LRmTWeChoSQ3iX2P8EL-eX6LrKFKKOedU"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401":{
+                        "description": "Unauthorized",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "default":{
+                                        "message":"Invalid Credentials"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
             }
         },
         "/users/:id":{
@@ -33,7 +142,28 @@
                         },
                         "style":"simple"
                     }
-                ]
+                ],
+                "description":"Rota de listagem de um usuário específico",
+                "responses":{
+                    "200":{
+                        "description": "OK",
+                        "content":{
+                            "application/json":{
+                                "examples":{
+                                    "user":{
+                                        "value":{
+                                            "licenced": true,
+                                            "phone": "40028922",
+                                            "email": "math@mail.com",
+                                            "name": "math",
+                                            "userUuid": "d1d09749-a81d-4294-b417-7f20356e1f6e"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
             },
             "patch":{
                 "tags":["User"],
@@ -48,7 +178,69 @@
                         },
                         "style":"simple"
                     }
-                ]
+                ],
+                "description":"Rota de atualização de um usuário específico",
+                "requestBody":{
+                    "content": {
+                        "application/json":{
+                            "schema":{
+                                "type":"object",
+                                "properties":{
+                                    "email":{
+                                        "type":"string"
+                                    },
+                                    "name":{
+                                        "type":"string"
+                                    }
+                                }
+                            },
+                            "examples":{
+                                "user":{
+                                    "value":{
+                                        "email":"matheusdev@mail.com",
+                                        "name":"matheus"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses":{
+                    "200":{
+                        "description":"OK",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object"
+                                },
+                                "examples":{
+                                    "user":{
+                                        "value":{
+                                            "licenced": true,
+                                            "phone": "40028922",
+                                            "email": "matheusdev@mail.com",
+                                            "name": "matheus",
+                                            "userUuid": "d1d09749-a81d-4294-b417-7f20356e1f6e"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404":{
+                        "description":"Not found",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "default":{
+                                        "message":"User not found"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
             },
             "delete":{
                 "tags":["User"],
@@ -63,7 +255,25 @@
                         },
                         "style":"simple"
                     }
-                ]
+                ],
+                "responses":{
+                    "204":{
+                        "description": "No Content"
+                    },
+                    "404":{
+                        "description":"Not found",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "default":{
+                                        "message":"User not found"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
             }
         },
         "/items":{
@@ -103,10 +313,78 @@
                             }
                         }
                     }
+                },
+                "responses":{
+                    "201":{
+                        "description":"Created",
+                        "content": {
+                            "application/json":{
+                                "examples":{
+                                    "item":{
+                                        "value":{
+                                            "owner": {
+                                                "phone": "40028922",
+                                                "email": "math@mail.com",
+                                                "name": "matheus",
+                                                "userUuid": "5e4fc7ad-70a0-43ac-99e6-5cd3c4da796e"
+                                            },
+                                            "model":"Escuna",
+                                            "brand":"Levefort",
+                                            "year":2015,
+                                            "capacity":7,
+                                            "location":"Rio de Janeiro",
+                                            "dailyPrice":60.00,
+                                            "image": "https://uploaddeimagens.com.br/images/003/904/917/original/Produto-sem-imagem.jpg?1655305876",
+                                            "updatedAt": "Tue Jun 21 2022 14:03:57 GMT-0300 (Brasilia Standard Time)",
+	                                        "createdAt": "Tue Jun 21 2022 14:03:57 GMT-0300 (Brasilia Standard Time)",
+                                            "service":true ,
+                                            "itemUuid": "167d08cd-b8ec-4f55-9329-b98a0e3f1a1e"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
             },
             "get":{
-                "tags":["Item"]
+                "tags":["Item"],
+                "description":"Rota de listagem de embarcações",
+                "responses":{
+                    "200":{
+                        "description": "OK",
+                        "content":{
+                            "application/json":{
+                                "examples":{
+                                    "items":{
+                                        "value":
+                                        [
+                                            {
+                                                "owner": {
+                                                    "phone": "40028922",
+                                                    "email": "samuel@mail.com",
+                                                    "name": "samuel",
+                                                    "userUuid": "5e4fc7ad-70a0-43ac-99e6-5cd3c4da796e"
+                                                },
+                                                "image": "https://uploaddeimagens.com.br/images/003/904/917/original/Produto-sem-imagem.jpg?1655305876",
+                                                "service": false,
+                                                "dailyPrice": 60,
+                                                "location": "Minas Gerais",
+                                                "capacity": 7,
+                                                "updatedAt": "Tue Jun 21 2022 14:03:57 GMT-0300 (Brasilia Standard Time)",
+                                                "createdAt": "Tue Jun 21 2022 14:03:57 GMT-0300 (Brasilia Standard Time)",
+                                                "year": 2015,
+                                                "brand": "teste",
+                                                "model": "testeeeeee",
+                                                "itemUuid": "167d08cd-b8ec-4f55-9329-b98a0e3f1a1e"
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
             }
         },
         "/items/:id":{
@@ -123,7 +401,41 @@
                         },
                         "style":"simple"
                     }
-                ]
+                ],
+                "description":"Rota de listagem de uma embarcação específica",
+                "responses":{
+                    "200":{
+                        "description": "OK",
+                        "content":{
+                            "application/json":{
+                                "examples":{
+                                    "item":{
+                                        "value":
+                                        {
+                                            "owner": {
+                                                "phone": "40028922",
+                                                "email": "samuel@mail.com",
+                                                "name": "samuel",
+                                                "userUuid": "5e4fc7ad-70a0-43ac-99e6-5cd3c4da796e"
+                                            },
+                                            "image": "https://uploaddeimagens.com.br/images/003/904/917/original/Produto-sem-imagem.jpg?1655305876",
+                                            "service": false,
+                                            "dailyPrice": 60,
+                                            "location": "Minas Gerais",
+                                            "capacity": 7,
+                                            "updatedAt": "Tue Jun 21 2022 14:03:57 GMT-0300 (Brasilia Standard Time)",
+                                            "createdAt": "Tue Jun 21 2022 14:03:57 GMT-0300 (Brasilia Standard Time)",
+                                            "year": 2015,
+                                            "brand": "teste",
+                                            "model": "testeeeeee",
+                                            "itemUuid": "167d08cd-b8ec-4f55-9329-b98a0e3f1a1e"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
             },
             "patch":{
                 "tags":["Item"],
@@ -148,7 +460,66 @@
                         },
                         "style":"simple"
                     }
-                ]
+                ],
+                "description": "Rota de atualização de uma embarcação específica",
+                "requestBody":{
+                    "content":{
+                        "application/json":{
+                            "schema":{
+                                "type":"object",
+                                "properties":{
+                                    "service":{
+                                        "type":"boolean"
+                                    },
+                                    "capacity":{
+                                        "type":"number"
+                                    }
+                                }
+                            },
+                            "examples":{
+                                "item":{
+                                    "value":{
+                                        "service":true,
+                                        "capacity":10
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses":{
+                    "200":{
+                        "description":"OK",
+                        "content":{
+                            "application/json":{
+                                "examples":{
+                                    "item":{
+                                        "value":
+                                        {
+                                            "owner": {
+                                                "phone": "40028922",
+                                                "email": "samuel@mail.com",
+                                                "name": "samuel",
+                                                "userUuid": "5e4fc7ad-70a0-43ac-99e6-5cd3c4da796e"
+                                            },
+                                            "image": "https://uploaddeimagens.com.br/images/003/904/917/original/Produto-sem-imagem.jpg?1655305876",
+                                            "service": true,
+                                            "dailyPrice": 60,
+                                            "location": "Minas Gerais",
+                                            "capacity": 10,
+                                            "updatedAt": "Tue Jun 21 2022 14:03:57 GMT-0300 (Brasilia Standard Time)",
+                                            "createdAt": "Tue Jun 21 2022 14:03:57 GMT-0300 (Brasilia Standard Time)",
+                                            "year": 2015,
+                                            "brand": "teste",
+                                            "model": "testeeeeee",
+                                            "itemUuid": "167d08cd-b8ec-4f55-9329-b98a0e3f1a1e"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
             },
             "delete":{
                 "tags":["Item"],
@@ -173,7 +544,26 @@
                         },
                         "style":"simple"
                     }
-                ]
+                ],
+                "description":"Rota de deleção de uma embarcação específica",
+                "responses":{
+                    "204":{
+                        "description":"No Content"
+                    },
+                    "404":{
+                        "description":"Not found",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "default":{
+                                        "message":"Item not found"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
             }
         },
         "/reserves":{
@@ -907,6 +1297,26 @@
         
     }, "components": {
         "schemas":{
+            "User":{
+                "type":"object",
+                "properties":{
+                    "name":{
+                        "type":"string"
+                    },
+                    "email":{
+                        "type":"string"
+                    },
+                    "password":{
+                        "type":"string"
+                    },
+                    "phone":{
+                        "type":"string"
+                    },
+                    "licenced":{
+                        "type":"boolean"
+                    }
+                }
+            },
             "Item":{
                 "type":"object",
                 "properties": {
