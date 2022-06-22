@@ -5,36 +5,36 @@ import { Rent } from "../Rent";
 import { Reserve } from "../Reserve";
 // import { Cart } from "../Cart";
 
-@Entity('users')
-export class User{
-    @PrimaryGeneratedColumn('uuid')
-    userUuid:string;
+@Entity("users")
+export class User {
+  @PrimaryGeneratedColumn("uuid")
+  userUuid: string;
 
-    @Column({length:50})
-    name:string;
-    
-    @Column({unique:true, length: 50})
-    email:string;
+  @Column({ length: 50 })
+  name: string;
 
-    @Column()
-    password:string;
+  @Column({ unique: true, length: 50 })
+  email: string;
 
-    @Column()
-    phone:string;
+  @Column()
+  password: string;
 
-    @Column({default:false})
-    licenced?:boolean;
+  @Column()
+  phone: string;
 
-    @OneToMany(() => Rent, (rent) => rent.user)
-    rents: Rent[]
+  @Column({ default: false })
+  licensed?: boolean;
 
-    @OneToMany(() => Reserve, (reserve) => reserve.user)
-    reserves: Reserve[]
+  @OneToMany(() => Rent, (rent) => rent.user, { lazy: true })
+  rents: Rent[];
 
-    @OneToMany(()=> Item, (item)=>item.owner)
-    items: Item[]
+  @OneToMany(() => Reserve, (reserve) => reserve.user, { lazy: true })
+  reserves: Reserve[];
 
-    comparePWD =async (pwdString:string): Promise<boolean> => {
-        return await compare(pwdString, this.password)     
-    }
+  @OneToMany(() => Item, (item) => item.owner)
+  items: Item[];
+
+  comparePWD = async (pwdString: string): Promise<boolean> => {
+    return await compare(pwdString, this.password);
+  };
 }

@@ -1,4 +1,6 @@
-import { PrimaryGeneratedColumn, Column, Entity, OneToMany, ManyToMany } from "typeorm";
+
+
+import { PrimaryGeneratedColumn, Column, Entity, ManyToOne } from "typeorm";
 import { Item } from "../Item";
 
 @Entity('rates')
@@ -12,8 +14,6 @@ export class Rate{
     @Column({length:100})
     comment:string;
 
-    @ManyToMany(() => Item, (item)=>item.rates)
+    @ManyToOne(() => Item, (item)=>item.rates)
     item:Item
-    
-
 }

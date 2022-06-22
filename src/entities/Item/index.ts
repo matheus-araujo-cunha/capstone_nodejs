@@ -1,55 +1,68 @@
-import { PrimaryGeneratedColumn, Column, Entity, OneToMany, CreateDateColumn, UpdateDateColumn, ManyToMany, ManyToOne, JoinTable } from "typeorm";
+import {
+  PrimaryGeneratedColumn,
+  Column,
+  Entity,
+  OneToMany,
+  CreateDateColumn,
+  UpdateDateColumn,
+  ManyToMany,
+  ManyToOne,
+  JoinTable,
+} from "typeorm";
 import { Rate } from "../Rate";
 import { Rent } from "../Rent";
 import { Reserve } from "../Reserve";
 import { User } from "../User";
 
-@Entity('itens')
-export class Item{
-    @PrimaryGeneratedColumn('uuid')
-    itemUuid:string;
+@Entity("itens")
+export class Item {
+  @PrimaryGeneratedColumn("uuid")
+  itemUuid: string;
 
-    @Column({length:120})
-    model:string;
+  @Column({ length: 120 })
+  model: string;
 
-    @Column({length:100})
-    brand:string;
+  @Column({ length: 100 })
+  brand: string;
 
-    @Column()
-    year:number;
+  @Column()
+  year: number;
 
-    @Column()
-    capacity:number;
-    
-    @CreateDateColumn()
-    createdAt:Date;
+  @Column()
+  capacity: number;
 
-    @UpdateDateColumn()
-    updatedAt:Date;
+  @CreateDateColumn()
+  createdAt: Date;
 
-    @Column({length:50})
-    location:string
+  @UpdateDateColumn()
+  updatedAt: Date;
 
-    @ManyToOne(()=>User, (user)=>user.items)
-    owner:User
+  @Column({ length: 50 })
+  location: string;
 
-    @Column({type:"float"})
-    dailyPrice:number
+  @ManyToOne(() => User, (user) => user.items, { eager: true })
+  owner: User;
 
-    @Column({default:true})
-    service:boolean
+  @Column({ type: "float" })
+  dailyPrice: number;
 
-    @Column()
-    image:string
+  @Column({ default: true })
+  service: boolean;
 
-    @OneToMany(()=> Rent, (rent)=>rent.item)
-    rents:Rent[]
+  @Column()
+  image: string;
 
-    @OneToMany(()=> Reserve, (reserve)=>reserve.item)
-    reserves:Reserve[]
+  @Column({default:0.0,type:"float"})
+  average:number
 
-    @ManyToMany(()=> Rate, (rate)=>rate.item)
-    @JoinTable()
-    rates:Rate[]
+  @OneToMany(() => Rent, (rent) => rent.item)
+  rents: Rent[];
 
+  @OneToMany(() => Reserve, (reserve) => reserve.item)
+  reserves: Reserve[];
+
+  @OneToMany(() => Rate,(rate)=>rate.item,{
+    eager:true
+  })
+  rates: Rate[];
 }
