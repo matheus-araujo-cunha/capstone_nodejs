@@ -23,7 +23,7 @@ export class User {
   phone: string;
 
   @Column({ default: false })
-  licenced?: boolean;
+  licensed?: boolean;
 
   @OneToMany(() => Rent, (rent) => rent.user, { lazy: true })
   rents: Rent[];
