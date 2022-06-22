@@ -6,7 +6,8 @@
         "version":"1.0.0"
     },
     "servers":[
-        {"url":"http://localhost:3000"}
+        {"url":"http://localhost:3000"},
+        {"url":"https://capstoneq4-nodejs.herokuapp.com"}
     ],
     "paths":{
         "/users/register":{
@@ -27,7 +28,7 @@
                                         "email":"math@mail.com",
                                         "password":"1234",
                                         "phone":"40028922",
-                                        "licenced":true
+                                        "licensed":true
                                     }
                                 }
                             }
@@ -42,7 +43,7 @@
                                 "examples":{
                                     "user":{
                                         "value":{
-                                            "licenced": true,
+                                            "licensed": true,
                                             "phone": "40028922",
                                             "email": "math@mail.com",
                                             "name": "math",
@@ -152,7 +153,7 @@
                                 "examples":{
                                     "user":{
                                         "value":{
-                                            "licenced": true,
+                                            "licensed": true,
                                             "phone": "40028922",
                                             "email": "math@mail.com",
                                             "name": "math",
@@ -216,7 +217,7 @@
                                 "examples":{
                                     "user":{
                                         "value":{
-                                            "licenced": true,
+                                            "licensed": true,
                                             "phone": "40028922",
                                             "email": "matheusdev@mail.com",
                                             "name": "matheus",
@@ -566,6 +567,124 @@
                 }
             }
         },
+        "/rates/register/:id":{
+            "post":{
+                "tags":["Rate"],
+                "parameters":[
+                    {
+                        "name":"token",
+                        "in":"header",
+                        "description":"Token deve ser passado no header",
+                        "required": true,
+                        "schema":{
+                            "type": "string"
+                        },
+                        "style":"simple"
+                    }
+                ],
+                "description":"Rota responsável por registrar uma avaliação referente a um item específico",
+                "requestBody":{
+                    "content":{
+                        "application/json":{
+                            "schema":{
+                                "$ref":"#/components/schemas/Rate"
+                            },
+                            "examples":{
+                                "rate":{
+                                    "value":{
+                                        "rate":4,
+                                        "comment":"Embarcação muito boa!"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses":{
+                    "201":{
+                        "description":"Created",
+                        "content":{
+                            "application/json":{
+                                "examples":{
+                                    "rate":{
+                                        "value":{
+                                            "rateUuid":"1fd12e09-8910-40b6-a062-8594f6b5089c",
+                                            "rate":4,
+                                            "comment":"Embarcação muito boa!"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404":{
+                        "description":"Not found",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "default":{
+                                        "message":"Item not found"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+            }
+        },
+        "/rates/:id":{
+            "get":{
+                "parameters":[
+                    {
+                        "name":"id",
+                        "in":"path",
+                        "description":"Id do item para listar as avaliações",
+                        "required": true,
+                        "schema":{
+                            "type": "string"
+                        },
+                        "style":"simple"
+                    }
+                ],
+                "description":"Rota responsável por listar as avaliações de um item específico",
+                "responses":{
+                    "200":{
+                        "description":"OK",
+                        "content":{
+                            "application/json":{
+                                "examples":{
+                                    "rates":{
+                                        "value":[
+                                            {
+                                                "rateUuid":"1fd12e09-8910-40b6-a062-8594f6b5089c",
+                                                "rate":4,
+                                                "comment":"Embarcação muito boa!"
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404":{
+                        "description":"Not found",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "default":{
+                                        "message":"Item not found"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    
+                }
+            }
+        },
         "/reserves":{
             "post":{
                 "tags":["Reserve"],
@@ -631,7 +750,7 @@
                                                     "email": "mathteste@mail.com",
                                                     "password": "$2b$10$fO1IOVKzXTjBv/i3gEfQGuZDxKeXziJzBOd/nuvmrB/obzxwuRc7K",
                                                     "phone": "40028922",
-                                                    "licenced": false
+                                                    "licensed": false
                                                 }
                                             },
                                             "user": {
@@ -640,7 +759,7 @@
                                                 "email": "samuel@mail.com",
                                                 "password": "$2b$10$CWI8nCaLkrevsfi2.fLlt.jWex5H07hlh8uqeTMblY3NOvo3wXnne",
                                                 "phone": "40028922",
-                                                "licenced": false
+                                                "licensed": false
                                             }
                                         }
                                     }
@@ -738,9 +857,8 @@
                                                         "email": "samuel@mail.com",
                                                         "password": "$2b$10$MfueWrp6bcyoZ88MWh5aRumspHQVjQv9ACrPr1mM5SscB7DRBIGGC",
                                                         "phone": "40028922",
-                                                        "licenced": false
-                                                    },
-                                                    "rates": []
+                                                        "licensed": false
+                                                    }
                                                 }
                                             }
                                         ]
@@ -811,10 +929,8 @@
                                                         "email": "samuel@mail.com",
                                                         "password": "$2b$10$MfueWrp6bcyoZ88MWh5aRumspHQVjQv9ACrPr1mM5SscB7DRBIGGC",
                                                         "phone": "40028922",
-                                                        "licenced": false
-                                                    },
-                                                    "rates": []
-                                                }
+                                                        "licensed": false
+                                                    }                                                }
                                             }
                                     }
                                 }
@@ -920,7 +1036,7 @@
                                                     "email": "mathteste@mail.com",
                                                     "password": "$2b$10$fO1IOVKzXTjBv/i3gEfQGuZDxKeXziJzBOd/nuvmrB/obzxwuRc7K",
                                                     "phone": "40028922",
-                                                    "licenced": false
+                                                    "licensed": false
                                                 }
                                             },
                                             "user": {
@@ -929,7 +1045,7 @@
                                                 "email": "samuel@mail.com",
                                                 "password": "$2b$10$CWI8nCaLkrevsfi2.fLlt.jWex5H07hlh8uqeTMblY3NOvo3wXnne",
                                                 "phone": "40028922",
-                                                "licenced": false
+                                                "licensed": false
                                             }
                                         }
                                     }
@@ -1312,7 +1428,7 @@
                     "phone":{
                         "type":"string"
                     },
-                    "licenced":{
+                    "licensed":{
                         "type":"boolean"
                     }
                 }
@@ -1353,6 +1469,17 @@
                         "type":"string"
                     },
                     "itemId":{
+                        "type":"string"
+                    }
+                }
+            },
+            "Rate":{
+                "type":"object",
+                "properties":{
+                    "rate":{
+                        "type":"number"
+                    },
+                    "comment":{
                         "type":"string"
                     }
                 }
