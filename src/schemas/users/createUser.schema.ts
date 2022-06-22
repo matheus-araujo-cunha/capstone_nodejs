@@ -7,7 +7,7 @@ const createUserSchema=yup.object().shape({
     email:yup.string().email().required().lowercase(),
     password:yup.string().required(),
     phone:yup.string().required(),
-    licenced:yup.bool().default(false).optional()
+    licensed:yup.bool().default(false).optional()
 })
 
 const serializedCreateUserSchema=yup.object().shape({
@@ -15,7 +15,7 @@ const serializedCreateUserSchema=yup.object().shape({
     name:yup.string().required(),
     email:yup.string().email().required().lowercase(),
     phone:yup.string().required(),
-    licenced:yup.bool().required()
+    licensed:yup.bool().required()
 })
 
 

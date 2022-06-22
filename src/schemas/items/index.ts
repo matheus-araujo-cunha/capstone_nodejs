@@ -33,6 +33,7 @@ const serializedItemCreatedSchema = yup
     dailyPrice: yup.number().required().positive(),
     service: yup.boolean().required(),
     image: yup.string().required(),
+    average:yup.number().required(),
     owner: yup.object().shape({
       userUuid: yup.string().required(),
       name: yup.string().required(),
@@ -55,6 +56,7 @@ const serializedGetItemsSchema = yup.array().of(
     dailyPrice: yup.number().required().positive(),
     service: yup.boolean().required(),
     image: yup.string().required(),
+    average:yup.number().required(),
     owner: yup.object().shape({
       userUuid: yup.string().required(),
       name: yup.string().required(),

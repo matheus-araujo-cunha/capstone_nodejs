@@ -17,7 +17,7 @@ const verifyPermissionForReserve = async (
     itemUuid: req.body.itemId,
   });
 
-  if (!user.licenced && !item.service) {
+  if (!user.licensed && !item.service) {
     throw new ErrorHandler(
       403,
       "You do not have a license to make a reservation without services"
