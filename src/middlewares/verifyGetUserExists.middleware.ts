@@ -8,7 +8,7 @@ const verifyGetUser = async(req:Request,res:Response,next:NextFunction) =>{
 
     if (!findUser){
         return res.status(400).json({
-            message:"User not find"
+            message:"User not found"
         })
     }
     return next()

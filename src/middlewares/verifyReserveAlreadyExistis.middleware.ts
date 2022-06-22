@@ -18,7 +18,7 @@ const verifyReserveAlreadyExists = async (
   const finishDate = new Date(formatDate(reserveValidated.finishDate));
 
   if (finishDate.getTime() < startDate.getTime()) {
-    throw new ErrorHandler(400, "finishDate cannot be earlier than startDate");
+    throw new ErrorHandler(406, "finishDate cannot be earlier than startDate");
   }
 
   const reserves = await reserveRepository.listAll();

@@ -8,7 +8,7 @@ const verifyItemExists=async ({params}:Request,res:Response,next:NextFunction)=>
 
     if(!item){
         return res.status(400).json({
-            message:"Item not find"
+            message:"Item not found"
         })
     }
     
