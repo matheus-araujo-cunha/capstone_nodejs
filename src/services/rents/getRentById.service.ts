@@ -1,7 +1,7 @@
 import { Request } from "express";
 import { ErrorHandler } from "../../errors/error";
 import { rentRepository } from "../../repositories";
-import { createRentSchema } from "../../schemas";
+import { createRentSchema, serializedCreateRentSchema } from "../../schemas";
 
 const getRentByIdService = async ({ params }: Request) => {
   const { id } = params;
@@ -12,7 +12,7 @@ const getRentByIdService = async ({ params }: Request) => {
     throw new ErrorHandler(404, "Rent not found");
   }
 
-  return createRentSchema.validate(rent, { stripUnknown: true });
+  return serializedCreateRentSchema.validate(rent, { stripUnknown: true });
 };
 
 export default getRentByIdService;

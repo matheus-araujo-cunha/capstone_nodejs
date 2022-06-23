@@ -52,8 +52,8 @@ export class Item {
   @Column()
   image: string;
 
-  @Column({default:0.0,type:"float"})
-  average:number
+  @Column({ default: 0.0, type: "float" })
+  average: number;
 
   @OneToMany(() => Rent, (rent) => rent.item)
   rents: Rent[];
@@ -61,8 +61,8 @@ export class Item {
   @OneToMany(() => Reserve, (reserve) => reserve.item)
   reserves: Reserve[];
 
-  @OneToMany(() => Rate,(rate)=>rate.item,{
-    eager:true
+  @OneToMany(() => Rate, (rate) => rate.item, {
+    eager: true,
   })
   rates: Rate[];
 }

@@ -9,6 +9,7 @@ const getDiffBetweenDays = (initialDate: string, finishDate: string) => {
 };
 
 const formatDate = (date: string) => {
+  console.log("DATA AQ", date);
   let dateSplit = date.split("/");
 
   const dateFormated = [dateSplit[1], dateSplit[0], dateSplit[2]].join("/");

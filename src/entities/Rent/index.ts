@@ -2,23 +2,23 @@ import { PrimaryGeneratedColumn, Column, Entity, ManyToOne } from "typeorm";
 import { Item } from "../Item";
 import { User } from "../User";
 
-@Entity('rents')
-export class Rent{
-    @PrimaryGeneratedColumn('uuid')
-    rentUuid:string;
+@Entity("rents")
+export class Rent {
+  @PrimaryGeneratedColumn("uuid")
+  rentUuid: string;
 
-    @Column({type:"float"})
-    value:number;
-    
-    @Column()
-    startDate:Date;
+  @Column({ type: "float" })
+  value: number;
 
-    @Column()
-    finishDate:Date;
-    
-    @ManyToOne(()=>User, (user)=>user.rents)
-    user:User
+  @Column()
+  startDate: Date;
 
-    @ManyToOne(()=>Item, (item)=>item.rents)
-    item:Item
+  @Column()
+  finishDate: Date;
+
+  @ManyToOne(() => User, (user) => user.rents)
+  user: User;
+
+  @ManyToOne(() => Item, (item) => item.rents, { eager: true })
+  item: Item;
 }

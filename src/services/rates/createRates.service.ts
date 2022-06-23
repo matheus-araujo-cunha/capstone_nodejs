@@ -1,27 +1,32 @@
 import { Rate } from "../../entities/Rate";
 import { Request } from "express";
 import rateRepository from "../../repositories/rates/rate.repository";
-import {serializedCreateRateSchema} from "../../schemas/rates/ratesSchema";
+import { serializedCreateRateSchema } from "../../schemas/rates/ratesSchema";
 import { itemRepository } from "../../repositories";
 
+const createRateService = async ({
+  validated,
+  params,
+}: Request): Promise<Partial<Rate>> => {
+  const rateValidated = validated as Partial<Rate>;
+  const { id } = params;
+  const newRate = await rateRepository.save({ ...rateValidated });
+  const findItem = await itemRepository.retrieve({ itemUuid: id });
 
-const createRateService =async({validated,params}:Request):Promise<Partial<Rate>> => {
+  findItem.rates.push(newRate);
+  const average = findItem.rates.reduce(
+    (total, currentValue) => total + currentValue.rate,
+    0
+  );
 
-    const rateValidated = validated as Partial<Rate>
-    const {id} = params
-    const newRate= await rateRepository.save({...rateValidated}) 
-    const findItem = await itemRepository.retrieve({itemUuid: id}) 
+  const newAverage = average / findItem.rates.length;
 
-    const average = findItem.rates.reduce((total,currentValue)=> total + currentValue.rate,0)
-    const newAverage = average / findItem.rates.length
-    
-    findItem.average = parseFloat(newAverage.toFixed(1))
+  findItem.average = parseFloat(newAverage.toFixed(1));
 
+  console.log("MEDIAAAAA", parseFloat(newAverage.toFixed(1)));
 
-    findItem.rates.push(newRate)
-    await itemRepository.save(findItem)
+  await itemRepository.save(findItem);
 
-
-    return serializedCreateRateSchema.validate(newRate,{stripUnknown:true})
-}
-export default createRateService
+  return serializedCreateRateSchema.validate(newRate, { stripUnknown: true });
+};
+export default createRateService;
