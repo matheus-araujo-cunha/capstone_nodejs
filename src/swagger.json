@@ -1,405 +1,1717 @@
 {
-    "openapi":"3.0.0",
-    "info":{
-        "title":"Capstone NodeJs API",
-        "description": "Essa é uma API de cadastro de usuários e locação de embarcações",
-        "version":"1.0.0"
-    },
-    "servers":[
-        {"url":"https://localhost:3000"}
-    ],
-    "paths":{
-        "/rents":{
-            "post":{
-                "tags":["Rent"],
-                "parameters": [
-                    {
-                        "name":"token",
-                        "in":"header",
-                        "description":"Token to be passed as a header",
-                        "required": true,
-                        "schema":{
-                            "type": "string"
-                        },
-                        "style":"simple"
-                    }
-                ],
-                "description":"Rota de locação de uma embarcação",
-                "requestBody":{
-                    "content":{
-                        "application/json":{
-                            "schema":{
-                                "$ref":"#components/schemas/Rent"
-                            },
-                            "examples":{
-                                "rent":{
-                                    "value":{
-                                        "value":250.00,
-                                        "itemId":"5dcd50ae-7a47-4851-8385-83608f50b4f8",
-                                        "startDate":"Thu Jun 09 2022 10:01:34 GMT-0300",
-                                        "finishDate":"Tue Dec 06 2022 00:00:00 GMT-0300"
-                                    }
-                                }
-                            }
-                        }
-                        
-                    }
-                },
-                "responses": {
-                    "201":{
-                        "description": "Created",
-                        "content":{
-                            "application/json":{
-                            "schema":{
-                                "type":"object",
-                                "$ref":"#/components/schemas/Rent"
-                            }
-                        }
-                    }
-                    },
-                    "400":{
-                        "description": "Missing required fields"
-                    },
-                    "401":{
-                        "description":"Unauthorized"
-                    }
-                }
-                
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Capstone NodeJs API",
+    "description": "Essa é uma API de cadastro de usuários e locação de embarcações",
+    "version": "1.0.0"
+  },
+  "servers": [{ "url": "http://localhost:3000" },
+    {"url":"http://capstoneq4-nodejs.herokuapp.com"}
+],
+  "paths": {
+    "/rents": {
+      "post": {
+        "summary": "Locação de Embarcação",
+        "description": "Rota de locação de uma embarcação",
+        "tags": ["Rent"],
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "token",
+            "in": "header",
+            "description": "Token to be passed as a header",
+            "required": true,
+            "schema": {
+              "type": "string"
             },
-            "get":{
-                "tags":["Rent"],
-                "parameters":[
-                    {
-                        "name":"token",
-                        "in":"header",
-                        "description":"Token to be passed as a header",
-                        "required": true,
-                        "schema":{
-                            "type": "string"
-                        },
-                        "style":"simple"
-                    }
-                ],
-                "description": "Rota de listar todas as locações do usuário",
-                "responses":{
-                    "200":{
-                        "description": "OK",
-                        "content":{
-                            "application/json":{
-                                "schema":{
-                                    "type":"array",
-                                    "items":{
-                                        "$ref":"#/components/schemas/Rent"
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    "401":{
-                        "description": "Unauthorized",
-                        "content":{
-                            "application/json":{
-                                "schema":{
-                                    "type":"object",
-                                    "default":{
-                                        "message":"Unauthorized."
-                                    }
-                                }
-                            }
-                        }
-                    }
+            "style": "simple"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#components/schemas/Rent"
+              },
+              "examples": {
+                "rent": {
+                  "value": {
+                    "value": 250.0,
+                    "itemId": "5dcd50ae-7a47-4851-8385-83608f50b4f8",
+                    "startDate": "Thu Jun 09 2022 10:01:34 GMT-0300",
+                    "finishDate": "Tue Dec 06 2022 00:00:00 GMT-0300"
+                  }
                 }
+              }
             }
+          }
         },
-        "/rents/:id":{
-            "get":{
-                "tags":["Rent"],
-                "parameters":[
-                    {
-                        "name":"id",
-                        "in":"path",
-                        "description": "ID of rent to get",
-                        "required":true,
-                        "schema":{
-                            "type":"string"
-                        },
-                        "style":"simple"
-                    },
-                    {
-                        "name":"token",
-                        "in":"header",
-                        "description":"Token to be passed as a header",
-                        "required": true,
-                        "schema":{
-                            "type": "string"
-                        },
-                        "style":"simple"
-                    }
-                ],
-                "description": "Rota de listar uma locação específica.",
-                "responses": {
-                 "200":{
-                     "description":"OK",
-                     "content":{
-                        "application/json":{
-                            "schema":{
-                                "type":"object",
-                                "$ref":"#/components/schemas/RentCreated"
-                            }
-                        }
-                     }
-                 },
-                 "404":{
-                    "description":"Not found.",
-                    "content":{
-                        "application/json":{
-                            "schema":{
-                                "type":"object",
-                                "default":{
-                                    "message":"Rent not found."
-                                }
-                            }
-                        }
-                    }
-                },
-                "401":{
-                    "description": "Unauthorized.",
-                    "content": {
-                        "application/json":{
-                            "schema":{
-                                "type":"object",
-                                "default":{
-                                    "message":"Unauthorized."
-                                }
-                            }
-                        }
-                    }
-                }   
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/Rent"
                 }
-            },
-            "delete":{
-                "tags":["Rent"],
-                "parameters":[
-                    {
-                        "name":"id",
-                        "in":"path",
-                        "description": "ID of rent to delete",
-                        "required":true,
-                        "schema":{
-                            "type":"string"
-                        },
-                        "style":"simple"
-                    },
-                    {
-                        "name":"token",
-                        "in":"header",
-                        "description":"Token to be passed as a header",
-                        "required": true,
-                        "schema":{
-                            "type": "string"
-                        },
-                        "style":"simple"
-                    }
-                ],
-                "description": "Rota de deletar uma locação específica.",
-                "responses":{
-
-                    "204":{
-                        "description": "No content.",
-                        "content":{
-                            "application/json":{
-                                "schema":{
-                                    "type":"object"
-                                }
-                            }
-                        }
-                    },
-                    "404":{
-                        "description":"Not found.",
-                        "content":{
-                            "application/json":{
-                                "schema":{
-                                    "type":"object",
-                                    "default":{
-                                        "message":"Rent not found."
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    "401":{
-                        "description": "Unauthorized",
-                        "content": {
-                            "application/json":{
-                                "schema":{
-                                    "type":"object",
-                                    "default":{
-                                        "message":"Unauthorized"
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-                
-            },
-            "patch":{
-                "tags":["Rent"],
-                "description": "Rota de atualização de uma locação específica.",
-                "parameters":[
-                    {
-                        "name":"id",
-                        "in":"path",
-                        "description": "ID of rent to update",
-                        "required":true,
-                        "schema":{
-                            "type":"string"
-                        },
-                        "style":"simple"
-                    },
-                    {
-                        "name":"token",
-                        "in":"header",
-                        "description":"Token to be passed as a header",
-                        "required": true,
-                        "schema":{
-                            "type": "string"
-                        },
-                        "style":"simple"
-                    }
-                ],
-                "responses":{
-                    "200":{
-                        "description":"OK",
-                        "content":{
-                           "application/json":{
-                               "schema":{
-                                   "type":"object",
-                                   "$ref":"#/components/schemas/RentCreated"
-                               }
-                           }
-                        }
-                    }, "404":{
-                        "description":"Not found.",
-                        "content":{
-                            "application/json":{
-                                "schema":{
-                                    "type":"object",
-                                    "default":{
-                                        "message":"Rent not found."
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    "401":{
-                        "description": "Unauthorized.",
-                        "content": {
-                            "application/json":{
-                                "schema":{
-                                    "type":"object",
-                                    "default":{
-                                        "message":"Unauthorized"
-                                    }
-                                }
-                            }
-                        }
-                    }
-
-                }
+              }
             }
+          },
+          "400": {
+            "description": "Missing required fields"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
         }
-        
-    }, "components": {
-        "schemas":{
-            "Rent":{
-                "type":"object",
-                "properties":{
-                    "value":{
-                        "type":"number"
-                    },
-                    "itemId":{
-                        "type":"string"
-                    },
-                    "startDate":{
-                        "type":"string",
-                        "format":"date"
-                    },
-                    "finishDate":{
-                        "type":"string",
-                        "format":"date"
-                    }
-                }
+      },
+      "get": {
+        "summary": "Listagem de Locações",
+        "description": "Rota de listar todas as locações do usuário",
+        "tags": ["Rent"],
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "token",
+            "in": "header",
+            "description": "Token to be passed as a header",
+            "required": true,
+            "schema": {
+              "type": "string"
             },
-            "RentCreated":{
-                "type":"object",
-                "properties":{
-                    "id":{
-                        "type":"string",
-                        "format":"uuid"
-                    },"value":{
-                        "type":"number"
-                    },
-                    "startDate":{
-                        "type":"string",
-                        "format":"date"
-                    },
-                    "finishDate":{
-                        "type":"string",
-                        "format":"date"
-                    },"item":{
-                        "type":"object",
-                        "properties": {
-                            "id":{
-                                "type":"string"
-                            },
-                            "model":{
-                                "type":"string"
-                            },
-                            "brand":{
-                                "type":"string"
-                            },
-                            "year":{
-                                "type":"number"
-                            },
-                            "capacity":{
-                                "type":"number"
-                            },
-                            "location":{
-                                "type":"string"
-                            },
-                            "dailyPrice":{
-                                "type":"number"
-                            },
-                            "service":{
-                                "type":"boolean"
-                            },
-                            "image":{
-                                "type":"string"
-                            },
-                            "owner":{
-                                "type":"object",
-                                "properties":{
-                                    "id":{
-                                        "type":"string"
-                                    },
-                                    "name":{
-                                        "type":"string"
-                                    },
-                                    "email":{
-                                        "type":"string"
-                                    },
-                                    "phone":{
-                                        "type":"string"
-                                    }
-                                }
-                            }
-                        }
-                    }
-
+            "style": "simple"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Rent"
+                  }
                 }
+              }
             }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "default": {
+                    "message": "Unauthorized."
+                  }
+                }
+              }
+            }
+          }
         }
+      }
+    },
+    "/rents/:id": {
+      "get": {
+        "summary": "Listagem de Rota.",
+        "description": "Rota de listar uma locação específica.",
+        "tags": ["Rent"],
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "style": "simple"
+          },
+          {
+            "name": "token",
+            "in": "header",
+            "description": "Token to be passed as a header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "style": "simple"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/RentCreated"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "default": {
+                    "message": "Rent not found."
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "default": {
+                    "message": "Unauthorized."
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Deleção de Rota.",
+        "description": "Rota de deletar uma locação específica.",
+        "tags": ["Rent"],
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of rent to delete",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "style": "simple"
+          },
+          {
+            "name": "token",
+            "in": "header",
+            "description": "Token to be passed as a header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "style": "simple"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No content.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "default": {
+                    "message": "Rent not found."
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "default": {
+                    "message": "Unauthorized"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "summary": "Atualização de Rota.",
+        "description": "Rota de atualização de uma locação específica.",
+        "tags": ["Rent"],
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of rent to update",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "style": "simple"
+          },
+          {
+            "name": "token",
+            "in": "header",
+            "description": "Token to be passed as a header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "style": "simple"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/RentCreated"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "default": {
+                    "message": "Rent not found."
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "default": {
+                    "message": "You are not allowed to change this item"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/register": {
+      "post": {
+        "summary": "Cadastro de Usuário",
+        "description": "Rota responsável por cadastrar usuário.",
+        "tags": ["User"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              },
+              "examples": {
+                "user": {
+                  "value": {
+                    "name": "Tiago",
+                    "email": "tiago@teste.com",
+                    "password": "123456",
+                    "phone": "1234-5678",
+                    "licenced": false
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Missing required fields"
+          },
+          "409": {
+            "description": "Email already exists."
+          }
+        }
+      }
+    },
+    "/users/login": {
+      "post": {
+        "summary": "Login de Usuário",
+        "description": "Rota responsável realizar login do Usuário, retornando o token.",
+        "tags": ["User"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              },
+              "examples": {
+                "student": {
+                  "value": {
+                    "email": "tiago@teste.com",
+                    "password": "123456"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "token": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Missing object property."
+          },
+          "401": {
+            "description": "Invalid credentials."
+          }
+        }
+      }
+    },
+    "/users/:id": {
+      "get": {
+        "summary": "Listar Usuário",
+        "description": "Rota responsável por listar um usuário específico",
+        "tags": ["User"],
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "token",
+            "in": "header",
+            "description": "Token to be passed as a header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "style": "simple"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "default": {
+                    "message": "Missing authorization token!"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Item Not Found"
+          }
+        }
+      },
+      "patch": {
+        "summary": "Listar Usuário",
+        "description": "Rota responsável por listar um usuário específico",
+        "tags": ["User"],
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of user to update",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "style": "simple"
+          },
+          {
+            "name": "token",
+            "in": "header",
+            "description": "Token to be passed as a header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "style": "simple"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "default": {
+                    "message": "User not found."
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "default": {
+                    "message": "Missing authorization token!"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Deleção de Usuário.",
+        "description": "Rota de deletar um usuário.",
+        "tags": ["User"],
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of user to delete",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "style": "simple"
+          },
+          {
+            "name": "token",
+            "in": "header",
+            "description": "Token to be passed as a header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "style": "simple"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User deleted",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "default": {
+                    "message": "User not found."
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "default": {
+                    "message": "Missing authorization token!"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "/items": {
+      "get": {
+        "summary": "Listagem de Itens",
+        "description": "Rota de listar todos os itens",
+        "tags": ["Items"],
+        "security": [{ "bearerAuth": [] }],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "$ref": "#/components/schemas/Items"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "default": {
+                    "message": "Unauthorized."
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Cadastrar de Itens",
+        "description": "Rota responsável por cadastrar itens",
+        "tags": ["Items"],
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "token",
+            "in": "header",
+            "description": "Token to be passed as a header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "style": "simple"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#components/schemas/Items"
+              },
+              "examples": {
+                "item": {
+                  "value": {
+                    "model": "Model X",
+                    "brand": "Tesla",
+                    "year": 1998,
+                    "capacity": 120,
+                    "location": "",
+                    "dailyPrice": 500,
+                    "service": true,
+                    "image": "imagens.com.br/images/001"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/ItemCreated"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Missing required fields"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/items/:id": {
+      "get": {
+        "summary": "Listagem de Item",
+        "description": "Rota responsável por listar um item específico por ID",
+        "tags": ["Items"],
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "style": "simple"
+          },
+          {
+            "name": "token",
+            "in": "header",
+            "description": "Token to be passed as a header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "style": "simple"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "$ref": "#/components/schemas/Items"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "default": {
+                    "message": "Item not found."
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "default": {
+                    "message": "Unauthorized."
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "summary": "Atualização de Item",
+        "description": "Rota responsável por atualizar um item específico por ID",
+        "tags": ["Items"],
+        "security": [{ "bearerAuth": [] }],
+
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of item to update",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "style": "simple"
+          },
+          {
+            "name": "token",
+            "in": "header",
+            "description": "Token to be passed as a header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "style": "simple"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/ItemCreated"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "default": {
+                    "message": "Item not found."
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "default": {
+                    "message": "Unauthorized"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Deleção de Item",
+        "description": "Rota responsável por deletar um item específico por ID",
+        "tags": ["Items"],
+        "security": [{ "bearerAuth": [] }],
+
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of item to delete",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "style": "simple"
+          },
+          {
+            "name": "token",
+            "in": "header",
+            "description": "Token to be passed as a header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "style": "simple"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Item deleted.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "default": {
+                    "message": "Item not found."
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "default": {
+                    "message": "Unauthorized"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/reserves": {
+      "get": {
+        "summary": "Listagem de Reservas",
+        "description": "Rota responsável por listar todas as reservas",
+        "tags": ["Reserve"],
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "token",
+            "in": "header",
+            "description": "Token to be passed as a header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "style": "simple"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Reserves"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "default": {
+                    "message": "Unauthorized."
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Cadastro de Reserva",
+        "description": "Rota responsável por cadastrar uma reserva",
+        "tags": ["Reserve"],
+        "security": [{ "bearerAuth": [] }],
+
+        "parameters": [
+          {
+            "name": "token",
+            "in": "header",
+            "description": "Token to be passed as a header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "style": "simple"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#components/schemas/Reserves"
+              },
+              "examples": {
+                "reserve": {
+                  "value": {
+                    "id": "5dcd50ae-7a47-4851-8385-83608f50b4f8",
+                    "value": 250,
+                    "startDate": "Thu Jun 09 2022 10:01:34 GMT-0300",
+                    "finishDate": "Tue Dec 06 2022 00:00:00 GMT-0300",
+                    "item": {
+                      "value": {
+                        "id": { "type": "string" },
+                        "createdAt": { "type": "string" },
+                        "updatedAt": { "type": "string" },
+                        "owner": {
+                          "type": "object",
+                          "properties": {
+                            "id": { "type": "string" },
+                            "name": { "type": "string" },
+                            "email": { "type": "string" },
+                            "phone": { "type": "string" }
+                          }
+                        },
+                        "model": { "type": "string" },
+                        "brand": { "type": "string" },
+                        "year": { "type": "number" },
+                        "capacity": { "type": "number" },
+                        "location": { "type": "string" },
+                        "dailyPrice": { "type": "number" },
+                        "service": { "type": "boolean" },
+                        "image": { "type": "string" }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/Reserves"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Missing required fields"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "You do not have a license to make a reservation without services"
+          },
+          "406": {
+            "description": "finishDate cannot be earlier than startDate"
+          },
+          "409": {
+            "description": "A reservation already exists between the dates provided"
+          }
+        }
+      }
+    },
+    "/reserves/:id": {
+      "patch": {
+        "summary": "Atualização de Reserva",
+        "description": "Rota responsável por atualizar uma reserva específica por ID",
+        "tags": ["Reserve"],
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of reserve to update",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "style": "simple"
+          },
+          {
+            "name": "token",
+            "in": "header",
+            "description": "Token to be passed as a header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "style": "simple"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/Reserves"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "default": {
+                    "message": "Reserve not found."
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "default": {
+                    "message": "Unauthorized"
+                  }
+                }
+              }
+            }
+          },
+          "406": {
+            "description": "finishDate cannot be earlier than startDate"
+          },
+          "409": {
+            "description": "A reservation already exists between the dates provided"
+          }
+        }
+      },
+      "get": {
+        "summary": "Listagem de Reserva",
+        "description": "Rota responsável por listar uma reserva específica por ID",
+        "tags": ["Reserve"],
+        "security": [{ "bearerAuth": [] }],
+
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "style": "simple"
+          },
+          {
+            "name": "token",
+            "in": "header",
+            "description": "Token to be passed as a header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "style": "simple"
+          }
+        ],
+
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "$ref": "#/components/schemas/Reserves"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "default": {
+                    "message": "Reserve not found."
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "default": {
+                    "message": "Missing authorization token!"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Deleção de Reserva",
+        "description": "Rota responsável por deletar uma reserva específica por ID",
+        "tags": ["Reserve"],
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of reserve to delete",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "style": "simple"
+          },
+          {
+            "name": "token",
+            "in": "header",
+            "description": "Token to be passed as a header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "style": "simple"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No content.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "default": {
+                    "message": "Rent not found."
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "default": {
+                    "message": "Unauthorized"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/rates/register/:id": {
+      "post": {
+        "summary": "Cadastro de Avaliação",
+        "description": "Rota responsável por cadastrar uma avaliação",
+        "tags": ["Rate"],
+        "security": [{ "bearerAuth": [] }],
+
+        "parameters": [
+          {
+            "name": "token",
+            "in": "header",
+            "description": "Token to be passed as a header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "style": "simple"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#components/schemas/Rates"
+              },
+              "examples": {
+                "rent": {
+                  "value": {
+                    "rate": 5,
+                    "comment": "Recomendo!"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/RateCreated"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Missing required fields"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Item Not Found"
+          }
+        }
+      }
+    },
+
+    "/rates/:id": {
+      "get": {
+        "summary": "Listagem de Avaliação",
+        "description": "Rota responsável por listar uma avaliação específica por ID",
+        "tags": ["Rate"],
+        "security": [{ "bearerAuth": [] }],
+
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "style": "simple"
+          },
+          {
+            "name": "token",
+            "in": "header",
+            "description": "Token to be passed as a header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "style": "simple"
+          }
+        ],
+
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "$ref": "#/components/schemas/Rates"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "default": {
+                    "message": "Rate not found."
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "default": {
+                    "message": "Unauthorized."
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "summary": "Atualização de Avaliação",
+        "description": "Rota responsável por atualizar uma avaliação específica por ID",
+        "tags": ["Rate"],
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of rate to update",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "style": "simple"
+          },
+          {
+            "name": "token",
+            "in": "header",
+            "description": "Token to be passed as a header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "style": "simple"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/RateCreated"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "default": {
+                    "message": "Rate not found."
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "default": {
+                    "message": "Unauthorized"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Deleção de Avaliação",
+        "description": "Rota responsável por deletar uma avaliação específica por ID",
+        "tags": ["Rate"],
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of reate to delete",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "style": "simple"
+          },
+          {
+            "name": "token",
+            "in": "header",
+            "description": "Token to be passed as a header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "style": "simple"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No content.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "default": {
+                    "message": "Rate not found."
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "default": {
+                    "message": "Unauthorized"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
- 
+  },
+
+  "components": {
+    "schemas": {
+      "Rent": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "number"
+          },
+          "itemId": {
+            "type": "string"
+          },
+          "startDate": {
+            "type": "string",
+            "format": "date"
+          },
+          "finishDate": {
+            "type": "string",
+            "format": "date"
+          }
+        }
+      },
+      "RentCreated": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "value": {
+            "type": "number"
+          },
+          "startDate": {
+            "type": "string",
+            "format": "date"
+          },
+          "finishDate": {
+            "type": "string",
+            "format": "date"
+          },
+          "item": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "model": {
+                "type": "string"
+              },
+              "brand": {
+                "type": "string"
+              },
+              "year": {
+                "type": "number"
+              },
+              "capacity": {
+                "type": "number"
+              },
+              "location": {
+                "type": "string"
+              },
+              "dailyPrice": {
+                "type": "number"
+              },
+              "service": {
+                "type": "boolean"
+              },
+              "image": {
+                "type": "string"
+              },
+              "owner": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  },
+                  "phone": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "User": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string",
+            "format": "password"
+          },
+          "phone": {
+            "type": "string"
+          },
+          "licenced": {
+            "type": "boolean"
+          },
+          "isAdm": {
+            "type": "boolean"
+          }
+        }
+      },
+      "Items": {
+        "type": "object",
+        "properties": {
+          "model": { "type": "string" },
+          "brand": { "type": "string" },
+          "year": { "type": "number" },
+          "capacity": { "type": "number" },
+          "location": { "type": "string" },
+          "dailyPrice": { "type": "number" },
+          "service": { "type": "boolean" },
+          "image": { "type": "string" }
+        }
+      },
+      "ItemCreated": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "createdAt": { "type": "string" },
+          "updatedAt": { "type": "string" },
+          "owner": {
+            "type": "object",
+            "properties": {
+              "id": { "type": "string" },
+              "name": { "type": "string" },
+              "email": { "type": "string" },
+              "phone": { "type": "string" }
+            }
+          },
+          "model": { "type": "string" },
+          "brand": { "type": "string" },
+          "year": { "type": "number" },
+          "capacity": { "type": "number" },
+          "location": { "type": "string" },
+          "dailyPrice": { "type": "number" },
+          "service": { "type": "boolean" },
+          "image": { "type": "string" }
+        }
+      },
+      "Reserves": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "value": { "type": "number" },
+          "startDate": { "type": "string" },
+          "finishDate": { "type": "string" },
+          "item": {
+            "type": "object",
+            "properties": {
+              "itemUuid": { "type": "string" },
+              "model": { "type": "string" },
+              "brand": { "type": "string" },
+              "year": { "type": "number" },
+              "capacity": { "type": "number" },
+              "location": { "type": "string" },
+              "owner": {
+                "type": "object",
+                "properties": {
+                  "userUuid": { "type": "string" },
+                  "name": { "type": "string" },
+                  "email": { "type": "string" },
+                  "phone": { "type": "string" }
+                }
+              },
+              "dailyPrice": { "type": "string" },
+              "service": { "type": "string" },
+              "image": { "type": "string" }
+            }
+          }
+        }
+      },
+      "Rates": {
+        "type": "object",
+        "properties": {
+          "rate": { "type": "number" },
+          "comment": { "type": "string" }
+        }
+      },
+      "RateCreated": {
+        "type": "object",
+        "properties": {
+          "rate": { "type": "number" },
+          "comment": { "type": "string" },
+          "rateUuid": { "type": "string" }
+        }
+      }
+    },
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
 }
